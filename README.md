@@ -13,7 +13,7 @@ Catipa é uma codificação fonêmica alfanumérica específica para a língua p
 
 A versão em browser do Catipa pode ser acessada em:
 
-**[https://catmoun.github.io/catipa/]**
+**https://catmoun.github.io/Catipa/**
 
 ## G2P
 
@@ -37,12 +37,13 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
 ## Planejamentos Futuros
 
 - Expansão do G2P para variedades regionais do português brasileiro;
-- Integração do inventário do português europeu ao G2P.
+- Integração do inventário do português europeu ao G2P;
+- Desenvolvimento de previsão para os sons abertos /ee/ e /oo/.
 
 ## Versões
 
 - v0.0.1 (31-12-2025)
-  - Lançamento oficial
+  - lançamento oficial.
 - v0.0.2 (31-12-2025
-  - corrigido a conversão de l em coda silábica.
+  - corrigido a conversão de l em coda silábica;
   - adicionado "ân" na lista de nasalizações.
