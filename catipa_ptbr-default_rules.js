@@ -35,7 +35,7 @@ function applyRules(word) {
   w = w.replace(/(?<=[aâáãeêéiíoôóuú])u(?=[aâáãeêéiíoôóuú])/g, "w");
   w = w.replace(/([aâáeêéoôóuú])\s*i/g, "$1Y");
   w = w.replace(/([aâáeêéiíoôó])\s*u/g, "$1W");
-  w = w.replace(/([aâáeêéiíoôó])\s*l([bcdfghijklmnpqrstvwxyz])/g, "$1W$2");
+  w = w.replace(/([aâáeêéiíoôó])\s*l(?![aâáãeêéiíoôóuúwyY])/g, "$1W");
   
   // =========================
   // PROTEÇÃO
@@ -72,6 +72,7 @@ function applyRules(word) {
   w = w.replace(/õ/g, "O2 ");
   
   w = w.replace(/an(?![aeiou])/g, "A2 ");
+  w = w.replace(/ân(?![aeiou])/g, "A1 ");
   w = w.replace(/en(?![aeiou])/g, "E2 ");
   w = w.replace(/in(?![aeiou])/g, "I2 ");
   w = w.replace(/on(?![aeiou])/g, "O2 ");
