@@ -44,6 +44,8 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
 
 - v0.0.1 (31-12-2025)
   - lançamento oficial.
-- v0.0.2 (31-12-2025
+- v0.0.2 (31-12-2025)
   - corrigido a conversão de l em coda silábica;
   - adicionado "ân" na lista de nasalizações.
+- v0.0.3 (31-12-2025)
+  - correção de bugs gerais 
