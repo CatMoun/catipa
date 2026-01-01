@@ -12,7 +12,7 @@ function applyRules(word) {
   // =========================
   
   w = w.replace(/(?<=[aâáãeêéiíoôóuú])s(?=[aâáãeêéiíoôóuú])/g, "z");
-  w = w.replace(/([uú])\s*l(?![aâáãeêéiíoôóuúwyY])/g, "$1");
+  w = w.replace(/([uú])\s*l(?!h)(?![aâáãeêéiíoôóuúwyY])/g, "$1");
   w = w.replace(/z\s*$/, "s");
   w = w.replace(/qu(?=[aâáãoôó])/g, "kw");
   w = w.replace(/qu(?=[eêéií])/g, "k");
@@ -38,7 +38,7 @@ function applyRules(word) {
   w = w.replace(/(?<=[aâáãeêéiíoôóuú])u(?=[aâáãeêéiíoôóuú])/g, "w");
   w = w.replace(/([aâáeêéoôóuú])\s*i/g, "$1Y");
   w = w.replace(/([aâáeêéiíoôó])\s*u/g, "$1W");
-  w = w.replace(/([aâáeêéiíoôó])\s*l(?![aâáãeêéiíoôóuúwyY])/g, "$1W");
+  w = w.replace(/([aâáeêéiíoôó])\s*l(?!h)(?![aâáãeêéiíoôóuúwyY])/g, "$1W");
   
   // =========================
   // PROTEÇÃO
