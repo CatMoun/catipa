@@ -13,7 +13,7 @@ Catipa é uma codificação fonêmica alfanumérica específica para a língua p
 
 A versão em browser do Catipa pode ser acessada em:
 
-**https://catmoun.github.io/Catipa/**
+**https://catmoun.github.io/catipa/**
 
 ## G2P
 
