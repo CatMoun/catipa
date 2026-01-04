@@ -97,7 +97,7 @@
 	<button onclick="showDoc('view/pe_inventory.html')">Inventário PE</button>
   </div>
 
-  <h1 id="title">Catipa v1.0.0</h1>
+  <h1 id="title">Catipa v1.1.0</h1>
   
   <section id="g2p">
   <h2>G2P: Português → Catipa</h2>
@@ -118,6 +118,7 @@
   <script src="js/viewLoader.js"></script>
   <script src="js/pb-default_lexicon.js"></script>
   <script src="js/pb-default_rules.js"></script>
+  <script src="js/resolver.js"></script>
 
   <script>
     function normalizeWord(w) {
@@ -140,13 +141,14 @@
 
       if (LEXICON[word]) {
 	    const entry = LEXICON[word];
+		const resolved = resolveEntry(entry, "interactive");
 		
-		if (typeof entry === "string") {
-		  output.innerText = entry;
+		if (resolved) {
+		  output.innerText = resolved;
           return;
         }
 		
-		showChoicePopup(word, entry);
+		showChoicePopup(word, entry.entries);
 		return;
 	  }
 
