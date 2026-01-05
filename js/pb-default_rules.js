@@ -22,6 +22,7 @@ function applyRules(word) {
   w = w.replace(/gu(?=[aâáãoôó])/g, "gw");
   w = w.replace(/gu(?=[eêéií])/g, "g");
   w = w.replace(/ss/g, "s");
+  w = w.replace(/sc(?![aâáãoôó])/g, "s");
   w = w.replace(/xc/g, "s");
   w = w.replace(/(?<!^)(?<![iu])x(?=[aâáãeêéiíoôóuú]|^x)/g, "z");
   w = w.replace(/xar\s*$/g, "ksar");
@@ -61,6 +62,7 @@ function applyRules(word) {
   w = w.replace(/pr/g, "§P§");
   w = w.replace(/br/g, "§B§");
   w = w.replace(/tr/g, "§T2§");
+  w = w.replace(/cr/g, "§C§");
   w = w.replace(/dr/g, "§D§");
   w = w.replace(/gr/g, "§G§");
   w = w.replace(/fr/g, "§F§");
@@ -73,7 +75,7 @@ function applyRules(word) {
   
   w = w.replace(/h/g, "");
   w = w.replace(/rr/g, "h");
-  w = w.replace(/r(?![aâáãeêéiíoôóuú])|(?<![aâáãeêéiíoôóuúW])r/g, "h");
+  w = w.replace(/r(?![aâáãeêéiíoôóuú])|(?<![aâáãeêéiíoôóuúWY])r/g, "h");
   
   // =========================
   // NASALIZAÇÃO
@@ -88,9 +90,11 @@ function applyRules(word) {
   w = w.replace(/an(?![aeiou])/g, "A2 ");
   w = w.replace(/ân(?![aeiou])/g, "A1 ");
   w = w.replace(/en(?![aeiou])/g, "E2 ");
+  w = w.replace(/ên(?![aeiou])/g, "E1 ");
   w = w.replace(/in(?![aeiou])/g, "I2 ");
   w = w.replace(/ín(?![aeiou])/g, "I1 ");
   w = w.replace(/on(?![aeiou])/g, "O2 ");
+  w = w.replace(/ôn(?![aeiou])/g, "O1 ");
   w = w.replace(/un(?![aeiou])/g, "U2 ");
   
   w = w.replace(/am\s*$/g, "A1 W");
@@ -130,6 +134,7 @@ function applyRules(word) {
   w = w.replace(/§L§/g, "lh");
   w = w.replace(/§T1§/g, "tch");
   w = w.replace(/§P§/g, "pr");
+  w = w.replace(/§C§/g, "kr");
   w = w.replace(/§B§/g, "br");
   w = w.replace(/§T2§/g, "tr");
   w = w.replace(/§D§/g, "dr");
@@ -165,6 +170,7 @@ function applyRules(word) {
   w = w.replace(/&/g, "ee");
   w = w.replace(/#/g, "oo");
   w = w.replace(/@/g, "aa");
+  w = w.replace(/cn/g, "ki2 n");
   w = w.replace(/i1 a2 d/g, "i1 aa2 d");
   
   // =========================
@@ -231,12 +237,14 @@ function applyRules(word) {
   w = w.replace(/a1 m a0/g, "A1 m a0");
   w = w.replace(/a1 n a0/g, "A1 n a0");
   w = w.replace(/a1 m i0/g, "aa1 m i0");
+  w = w.replace(/a1 n u0/g, "aa1 n u0");
   w = w.replace(/e1 k a0/g, "ee1 k a0");
   w = w.replace(/e1 k u0/g, "ee1 k u0");
   w = w.replace(/E0\s*$/g, "E0 Y");
   w = w.replace(/a2 ([dfgjklmnprstvx]) A1 W/g, "a1 $1 A2 W");
   w = w.replace(/A1 ([bdfgjklmnprstvx]) o2 W/g, "A2 $1 o1 W");
   w = w.replace(/o1 w u0 s/g, "o1 w o0 s");
+  w = w.replace(/o1 z i0/g, "oo1 z i0");
   
   w = w.trim();
   
