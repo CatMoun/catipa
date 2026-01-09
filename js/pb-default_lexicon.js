@@ -78,6 +78,7 @@ const LEXICON = {
       ]
 	},
 	"ortodontologia": "oo2 h t o2 d O2 t o2 l o2 g i1 a0",
+	"ortodoxo": "oo2 h t oo2 d oo1 k s u0",
 	"próximo": "p r oo1 s i2 m u0",
 	"seca": {
 	  default : "substantivo",
