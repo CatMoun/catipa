@@ -97,14 +97,14 @@
 	<button onclick="showDoc('view/pe_inventory.html')">Inventário PE</button>
   </div>
 
-  <h1 id="title">Catipa v1.1.1</h1>
+  <h1 id="title">Catipa v1.1.2</h1>
   
-  <section id="g2p">
+  <section id="G2P">
   <h2>G2P: Português → Catipa</h2>
   <select id="variant" disabled>
-     <option>Brasileiro 'Neutro'</option>
-     <option>Brasileiro 'Goiás'</option>
-     <option>Europeu 'Neutro'</option>
+     <option>Brasileiro - Neutro</option>
+     <option>Brasileiro - Goiás</option>
+     <option>Europeu - Neutro</option>
   </select><br><br>
 
   <textarea id="input" rows="1" placeholder="Digite uma palavra..."></textarea>
@@ -176,7 +176,7 @@
   <div id="view"></div>
   
   <footer>
-    <small>© 2026 Junia da Costa</small>
+    <small><p>&copy; 2019 - <script>document.write(new Date().getFullYear());</script> Junia da Costa</p></small>
   </footer>
   </div>
   
@@ -187,14 +187,14 @@
   };
   
   function showG2P() {
-      document.getElementById("g2p").style.display = "block";
+      document.getElementById("G2P").style.display = "block";
       document.getElementById("view").innerHTML = "";
       document.getElementById("menu").style.display = "none";
       document.getElementById("input").focus();
   }
 
   function showDoc(path) {
-      document.getElementById("g2p").style.display = "none";
+      document.getElementById("G2P").style.display = "none";
 	  document.getElementById("menu").style.display = "none";
       loadView(path);
   }
@@ -202,4 +202,3 @@
   
 </body>
 </html>
-
