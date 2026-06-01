@@ -32,6 +32,8 @@ const LEXICON = {
           { type: "verbo", ipa: "a2 k oo1 h d u0" }
       ]
 	},
+	"beco": "b e1 k u0",
+	"becos": "b e1 k u0 s",
 	"design": "dj i2 z a1 I0",
 	"e": "i1",
 	"envolto": "E2 v o1 W t u0",
@@ -51,8 +53,10 @@ const LEXICON = {
 	},
 	"index": "I2 d ee1 k s",
 	"indexa": "I2 d ee1 k s a0",
-	"indexam": "I2 d ee1 k s a0",
+	"indexam": "I2 d ee1 k s A0 W",
 	"indexar": "I2 d e2 k s a1 h",
+	"indexaram": "I2 d e2 k s a1 r A0 W",
+	"indexarão": "I2 d e2 k s a2 r A1 W",
 	"indexou": "I2 d e2 k s o1 W",
 	"jogo": {
 	  default : "substantivo",
@@ -61,6 +65,12 @@ const LEXICON = {
           { type: "verbo", ipa: "j oo1 g u0" }
       ]
 	},
+	"jogos": "j oo1 g u0 s",
+	"foco": "f oo1 k u0",
+	"focos": "f oo1 k u0 s",
+	"logo": "l oo1 g u0",
+	"loguinho": "l oo2 g i1 nh u0",
+	"loguinhos": "l oo2 g i1 nh u0 s",
 	"marketing": "m a1 h k e2 tch I0",
 	"me": "m i1",
 	"molho": {
@@ -74,7 +84,7 @@ const LEXICON = {
 	  default : "substantivo",
 	  entries : [
 	      { type: "substantivo", ipa: "o1 lh u0" },
-          { type: "verbo", ipa: "oo' lh u0" }
+          { type: "verbo", ipa: "oo1 lh u0" }
       ]
 	},
 	"ortodontologia": "oo2 h t o2 d O2 t o2 l o2 g i1 a0",
@@ -104,6 +114,12 @@ const LEXICON = {
 	"sexo": "s ee1 k s u0",
 	"sexy": "s ee1 k s i0",
 	"show": "x o1 W",
+	"verde": "v e1 h dj i0",
+	"verdes": "v e1 h dj i0 s",
+	"velha": "v ee1 lh a0",
+	"velhas": "v ee1 lh a0 s",
+	"velho": "v ee1 lh u0",
+	"velhos": "v ee1 lh u0 s",
 	"volto": "v oo1 W t u0"
 };
 
