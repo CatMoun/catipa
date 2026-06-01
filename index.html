@@ -97,7 +97,7 @@
 	<button onclick="showDoc('view/pe_inventory.html')">Inventário PE</button>
   </div>
 
-  <h1 id="title">Catipa v1.1.2</h1>
+  <h1 id="title">Catipa v1.2.3</h1>
   
   <section id="G2P">
   <h2>G2P: Português → Catipa</h2>
@@ -159,6 +159,7 @@
       if (e.key === "Enter") {
         e.preventDefault();
         runG2P();
+        e.target.select();
       }
     });
 	
