@@ -4,7 +4,48 @@
 // Licensed under the MIT License
 // =====================================
 
+function detectMorphClass(word) {
+  const w = word.toLowerCase().normalize("NFC");
+
+  // --- SUFIXOS NOMINAIS ---
+  if (/ção$|são$|xão$/.test(w))              return "noun";
+  if (/dade$|idade$/.test(w))                return "noun";
+  if (/eza$|ura$|ice$/.test(w))              return "noun";
+  if (/ismo$|ista$/.test(w))                 return "noun";
+  if (/agem$|igem$|ugem$/.test(w))           return "noun";
+  if (/mento$|amento$|imento$/.test(w))      return "noun";
+  if (/eiro$|eira$/.test(w))                 return "noun";
+  if (/ência$|ância$/.test(w))               return "noun";
+  if (/ário$|ária$/.test(w))                 return "noun";
+  if (/ório$|ória$/.test(w))                 return "noun";
+  if (/dor$|tor$|sor$/.test(w))              return "noun";
+
+  // --- FORMAS VERBAIS ---
+  if (/ou$/.test(w))                         return "verb-open";
+  if (/[ae]ndo$|indo$/.test(w))              return "verb-open";
+  if (/aram$|eram$|iram$/.test(w))           return "verb-open";
+  if (/arão$|erão$|irão$/.test(w))           return "verb-open";
+  if (/aste$|este$|iste$/.test(w))           return "verb-open";
+  if (/asse$|esse$|isse$/.test(w))           return "verb-open";
+  if (/aria$|eria$|iria$/.test(w))           return "verb-open";
+  if (/arei$|erei$|irei$/.test(w))           return "verb-open";
+  if (/arás$|erás$|irás$/.test(w))           return "verb-open";
+  if (/ará$|erá$|irá$/.test(w))              return "verb-open";
+  if (/emos$|imos$/.test(w))                 return "verb-open";
+  if (/amos$/.test(w) && !/gramas?$|programas?$/.test(w)) return "verb-open";
+  if (/em$/.test(w)   && !/agem$|igem$/.test(w))          return "verb-open";
+  if (/am$/.test(w))                         return "verb-open";
+
+  if (/eu$/.test(w) && w !== "eu")             return "verb-open";
+
+  const NOUN_E = /nte$|bre$|dre$|fre$|tre$|gre$|vre$|ce$|xe$|que$|ge$/;
+  if (/[^aeiou]e$/.test(w) && !NOUN_E.test(w)) return "verb-open";
+
+  return null;
+}
+
 function applyRules(word) {
+  const morphClass = detectMorphClass(word);
   let w = word;
 
   // =========================
@@ -20,16 +61,17 @@ function applyRules(word) {
   w = w.replace(/qu(?=[aâáãoôó])/g, "kw");
   w = w.replace(/qu(?=[eêéií])/g, "k");
   w = w.replace(/gu(?=[aâáãoôó])/g, "gw");
-  w = w.replace(/gu(?=[eêéií])/g, "g");
   w = w.replace(/g(?=[eêéií])/g, "j");
+  w = w.replace(/gu(?=[eêéií])/g, "g");
   w = w.replace(/ss/g, "s");
   w = w.replace(/sc(?![aâáãoôó])/g, "s");
   w = w.replace(/xc/g, "s");
-  w = w.replace(/(?<!^)(?<![iu])x(?=[aâáãeêéiíoôóuú]|^x)/g, "z");
+  w = w.replace(/(?<!^)(?<![iu])x(?=[aâáãeêéiíoôóuú])/g, "z");
   w = w.replace(/xar\s*$/g, "ksar");
   w = w.replace(/ç/g, "s");
   w = w.replace(/c(?=[aâáãoôóuú])/g, "k");
   w = w.replace(/c(?=[eêéií])/g, "s");
+  w = w.replace(/c(?![aâáãeêéiíoôóuúh])/g, "k");
   w = w.replace(/d(?=[ií])/g, "dj");
   w = w.replace(/de\s*$/, "dje");
   w = w.replace(/^ch|(?<!t)ch/g, "x");
@@ -160,6 +202,7 @@ function applyRules(word) {
   w = w.replace(/([iIuU])2\s*$/, "$11 ");
   w = w.replace(/([iIuU])2\s*s$/, "$11 s");
   w = w.replace(/([aeiou])2\s*h\s*$/, "$11 h");
+  w = w.replace(/([aeiouAEIOU])2(\s*[WY])\s*$/, "$11$2");
   
   if (!w.includes("1")) {
     if ((w.match(/[aeiouAEIOU]2/g) || []).length === 1) {
@@ -225,33 +268,34 @@ function applyRules(word) {
   // =========================
   // RETOQUE FINAL
   // =========================
-  
-  if (!hasGraphicAccent) {
-	  w = w.replace(/o1 dj i0/g, "oo1 dj i0");
+
+  w = w.replace(/(?<!e)e1 h (?=(?!dj)\S)/g, "ee1 h ");
+  const encodedVowelCount = (w.match(/[aeiouAEIOU][012]/g) || []).length;
+  if (!hasGraphicAccent && morphClass === "verb-open") {
+    w = w.replace(/\bo1\b(?!\s*W)/g, "oo1");
+    w = w.replace(/\be1\b(?!\s*W)/g, "ee1");
   }
-  
-  w = w.replace(/e1 t u0/g, "ee1 t u0");
-  w = w.replace(/e1 h t u0/g, "ee1 h t u0");
-  w = w.replace(/e1 s u0/g, "ee1 s u0");
-  w = w.replace(/e1 h\s*$/g, "ee1 h");
+
+  w = w.replace(/e1 t u0/g,   "ee1 t u0");
+  w = w.replace(/e1 s u0/g,   "ee1 s u0");
   w = w.replace(/o1 tch i0/g, "oo1 tch i0");
-  w = w.replace(/e1 h d a0/g, "ee1 h d a0");
-  w = w.replace(/e1 h d u0/g, "ee1 h d u0");
-  w = w.replace(/e1 h m i0/g, "ee1 h m i0");
-  w = w.replace(/e1 g r i0/g, "ee1 g r i0");
-  w = w.replace(/a1 m a0/g, "A1 m a0");
-  w = w.replace(/a1 n a0/g, "A1 n a0");
-  w = w.replace(/a1 m i0/g, "aa1 m i0");
-  w = w.replace(/a1 n u0/g, "aa1 n u0");
-  w = w.replace(/e1 k a0/g, "ee1 k a0");
-  w = w.replace(/e1 k u0/g, "ee1 k u0");
-  w = w.replace(/E0\s*$/g, "E0 Y");
+  w = w.replace(/e1 k i0/g,   "ee1 k i0");
+  w = w.replace(/e1 k a0/g,   "ee1 k a0");
+  w = w.replace(/e1 k u0/g,   "ee1 k u0");
+  w = w.replace(/e1 z i0/g,   "ee1 z i0");
+  w = w.replace(/o1 z i0/g,   "oo1 z i0");
+  w = w.replace(/o1 dj i0/g,  "oo1 dj i0");
+
+  w = w.replace(/a1 m a0/g,  "A1 m a0");
+  w = w.replace(/a1 n a0/g,  "A1 n a0");
+  w = w.replace(/a1 m i0/g,  "aa1 m i0");
+  w = w.replace(/a1 n u0/g,  "aa1 n u0");
+  w = w.replace(/E0\s*$/g,   "E0 Y");
   w = w.replace(/a2 ([dfgjklmnprstvx]) A1 W/g, "a1 $1 A2 W");
   w = w.replace(/A1 ([bdfgjklmnprstvx]) o2 W/g, "A2 $1 o1 W");
   w = w.replace(/o1 w u0 s/g, "o1 w o0 s");
-  w = w.replace(/o1 z i0/g, "oo1 z i0");
-  
+
   w = w.trim();
-  
+
   return w;
 }
