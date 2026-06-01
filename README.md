@@ -62,3 +62,7 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
   - atualização de léxico e regras
 - v1.1.2 (09-01-2026)
   - atualização de léxico e regras
+- v1.2.3 (31-05-2026)
+  - atualização de léxico e regras
+  - classificação morfológica de verbo e substantivo
+  
