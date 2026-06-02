@@ -90,11 +90,11 @@ function applyRules(word) {
   w = w.replace(/([aâáeêéiíoôó])\s*u/g, "$1W");
   if (/l\s*$/.test(w)) {
 	  w = w.replace(/al/g, "ál");
-	  w = w.replace(/el/g, "él");
 	  w = w.replace(/il/g, "íl");
 	  w = w.replace(/ol/g, "ól");
   }
-  w = w.replace(/([aâáeêéiíoôó])\s*l(?!h)(?![aâáãeêéiíoôóuúwyY])/g, "$1W");
+  w = w.replace(/([aâáêéiíoôó])\s*l(?!h)(?![aâáãeêéiíoôóuúwyY])/g, "$1W");
+  w = w.replace(/(e)\s*l(?!h)(?![aâáãeêéiíoôóuúwyY])/g, "e0 W");
   w = w.replace(/(?<=[áiu])x/g, "ks");
   
   // =========================
@@ -107,7 +107,7 @@ function applyRules(word) {
   w = w.replace(/pr/g, "§P§");
   w = w.replace(/br/g, "§B§");
   w = w.replace(/tr/g, "§T2§");
-  w = w.replace(/cr/g, "§C§");
+  w = w.replace(/kr/g, "§C§");
   w = w.replace(/dr/g, "§D§");
   w = w.replace(/gr/g, "§G§");
   w = w.replace(/fr/g, "§F§");
@@ -276,6 +276,9 @@ function applyRules(word) {
     w = w.replace(/\be1\b(?!\s*W)/g, "ee1");
   }
 
+  w = w.replace(/v e2 W\s*$/, "v e0 W");
+  w = w.replace(/v e2 Y s\s*$/, "v e0 Y s");
+  
   w = w.replace(/e1 t u0/g,   "ee1 t u0");
   w = w.replace(/e1 s u0/g,   "ee1 s u0");
   w = w.replace(/o1 tch i0/g, "oo1 tch i0");
