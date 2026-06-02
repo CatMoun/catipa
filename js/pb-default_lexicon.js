@@ -35,12 +35,10 @@ const LEXICON = {
 	"beco": "b e1 k u0",
 	"becos": "b e1 k u0 s",
 	"design": "dj i2 z a1 I0",
-	"e": "i1",
+	"e": "i0",
 	"de": "dj i0",
 	"ele": "e1 l i0",
 	"eram": "ee1 r A0 W",
-	"incrível": "I2 k r i1 v e0 W",
-	"incríveis": "I2 k r i1 v e0 Y s",
 	"que": "k i0",
 	"se": "s i0",
 	"ela": "ee1 l a0",
@@ -86,7 +84,7 @@ const LEXICON = {
 	"loguinho": "l oo2 g i1 nh u0",
 	"loguinhos": "l oo2 g i1 nh u0 s",
 	"marketing": "m a1 h k e2 tch I0",
-	"me": "m i1",
+	"me": "m i0",
 	"molho": {
 	  default : "substantivo",
 	  entries : [
