@@ -2,203 +2,513 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Catipa - Codificação Fonêmica Alfanumérica para Português | G2P</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catipa (G2P)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0c0917;
+      --card:      rgba(255,255,255,0.055);
+      --card-b:    rgba(255,255,255,0.10);
+      --border:    rgba(180,140,255,0.18);
+      --primary:   #9b72d4;
+      --primary-h: #b899e8;
+      --accent:    #c9a6ff;
+      --text:      #ede6ff;
+      --muted:     rgba(237,230,255,0.50);
+      --output-bg: rgba(0,0,0,0.30);
+      --radius:    16px;
+    }
+
+    /* ── Background ── */
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 16px 80px;
+      overflow-x: hidden;
+    }
+
+    /* Orbs de fundo */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::before {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(123,94,167,0.35) 0%, transparent 70%);
+      top: -150px; left: -200px;
+    }
+    body::after {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(80,40,140,0.30) 0%, transparent 70%);
+      bottom: -100px; right: -150px;
+    }
+
+    /* ── Layout ── */
+    #app {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    /* ── Header ── */
+    header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
     h1 {
       font-family: 'Cinzel', serif;
-      color: #7B5EA7;
-	  letter-spacing: 1px;
-    }
-	
-	body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #c9a6ff 0%, #9b72d4 60%, #6a3fa6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 2px;
+      user-select: none;
     }
 
-    textarea {
-      width: 260px;
-      font-size: 16px;
+    .version {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-top: 4px;
+      user-select: none;
     }
 
-    button {
-      font-size: 16px;
-      padding: 6px 12px;
-      cursor: pointer;
-    }
-
-    #output {
-      margin-top: 10px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-	
-	#choiceBox {
-	  position: fixed;
-	  text-align: center;
-      top: 30%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #ffffff;
-      padding: 15px;
-      border-radius: 8px;
-	  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-	}
-	
-	#app {
-      width: 100%;
-      max-width: 480px;
-      padding: 16px;
-      text-align: center;
-    }
-	
-	footer {
-	  user-select: none;
-      margin-top: 24px;
-      opacity: 0.6;
-    }
-    
+    /* ── Menu button ── */
     #menuBtn {
-      font-size: 24px;
-      background: none;
-      border: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      font-size: 20px;
       cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      flex-shrink: 0;
     }
+    #menuBtn:hover { background: var(--card-b); border-color: var(--primary); }
 
+    /* ── Dropdown menu ── */
+    #menu {
+      display: none;
+      position: absolute;
+      top: 56px; right: 0;
+      background: #1a1030;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 8px;
+      min-width: 200px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      z-index: 100;
+    }
     #menu button {
       display: block;
       width: 100%;
-      margin: 6px 0;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 0.92rem;
+      font-family: 'Inter', sans-serif;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
     }
-	
-	#title {
+    #menu button:hover { background: rgba(155,114,212,0.18); color: var(--accent); }
+    #menu hr { border: none; border-top: 1px solid var(--border); margin: 6px 0; }
+
+    /* ── Mode tabs ── */
+    .mode-tabs {
+      display: flex;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 4px;
+      gap: 4px;
+      width: 100%;
+      max-width: 320px;
+    }
+    .mode-tabs button {
+      flex: 1;
+      padding: 8px 20px;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      background: none;
+      color: var(--muted);
+    }
+    .mode-tabs button.active {
+      background: linear-gradient(135deg, #7b4bbf, #9b72d4);
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(123,75,191,0.45);
+    }
+
+    /* ── Card ── */
+    .card {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .card h2 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    /* ── Textarea & Input ── */
+    textarea, input[type="text"] {
+      width: 100%;
+      background: rgba(0,0,0,0.30);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      padding: 14px 16px;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      line-height: 1.6;
+    }
+    textarea:focus, input[type="text"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(155,114,212,0.18);
+    }
+    textarea::placeholder, input::placeholder { color: rgba(237,230,255,0.28); }
+
+    .hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 6px;
+      text-align: right;
+    }
+
+    /* ── Convert button ── */
+    .btn-convert {
+      margin-top: 16px;
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #7b4bbf 0%, #9b72d4 100%);
+      color: #fff;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(123,75,191,0.35);
+    }
+    .btn-convert:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(123,75,191,0.50); }
+    .btn-convert:active { transform: translateY(0); }
+
+    /* ── Output ── */
+    .output-wrap {
+      margin-top: 20px;
+    }
+    .output-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    #output, #outputText {
+      min-height: 52px;
+      background: var(--output-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    /* ── choiceBox ── */
+    #choiceBox {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: #1a1030;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+      z-index: 200;
+      min-width: 280px;
+      text-align: center;
+    }
+    #choiceWord {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+    #choiceWord strong { color: var(--accent); }
+    .choice-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    #choice1, #choice2 {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    #choice1 {
+      background: rgba(155,114,212,0.18);
+      border: 1px solid var(--primary);
+      color: var(--accent);
+    }
+    #choice1:hover { background: rgba(155,114,212,0.35); }
+    #choice2 {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    #choice2:hover { background: rgba(255,255,255,0.12); }
+    .choice-hint {
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    /* ── View (docs) ── */
+    #view { width: 100%; }
+    #view iframe {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 8px;
+      font-size: 0.72rem;
+      color: rgba(237,230,255,0.25);
       user-select: none;
+      text-align: center;
     }
-	
-	#esq {
-	  text-align: left;
-	}
-	
+
+    /* ── Fade animation ── */
+    .fade-in { animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   </style>
 </head>
 
 <body>
-  
-  <div id="app">
-  <button id="menuBtn">☰</button>
-  <div id="menu" style="display:none;">
-    <button onclick="showG2P()">G2P</button>
-	<button onclick="showDoc('view/about.html')">Sobre</button>
-	<button onclick="showDoc('view/report.html')">Encontrou um erro?</button>
-    <button onclick="showDoc('view/pb_inventory.html')">Inventário PB</button>
-	<button onclick="showDoc('view/pe_inventory.html')">Inventário PE</button>
+<div id="app">
+
+  <!-- Header -->
+  <header>
+    <div>
+      <h1>Catipa</h1>
+      <div class="version">v2.0.0 &nbsp;·&nbsp; G2P</div>
+    </div>
+    <div style="position:relative;">
+      <button id="menuBtn" title="Menu">☰</button>
+      <div id="menu">
+        <button onclick="showG2PText()">G2P Texto</button>
+        <button onclick="showG2PWord()">G2P Palavra</button>
+        <hr>
+        <button onclick="showDoc('view/about.html')">Sobre</button>
+        <button onclick="showDoc('view/report.html')">Encontrou um erro?</button>
+        <button onclick="showDoc('view/pb_inventory.html')">Inventário PB</button>
+        <button onclick="showDoc('view/pe_inventory.html')">Inventário PE</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mode tabs -->
+  <div class="mode-tabs" id="modeTabs">
+    <button id="tabText"   onclick="showG2PText()" class="active">Texto</button>
+    <button id="tabWord"   onclick="showG2PWord()">Palavra</button>
   </div>
 
-  <h1 id="title">Catipa v1.2.5</h1>
-  
-  <section id="G2P">
-  <h2>G2P: Português → Catipa</h2>
-  <select id="variant" disabled>
-     <option>Brasileiro - Neutro</option>
-     <option>Europeu - Neutro</option>
-  </select><br><br>
-
-  <textarea id="input" rows="1" placeholder="Digite uma palavra..."></textarea>
-  <br><br>
-
-  <button onclick="runG2P()">Converter</button>
-
-  <h3>Saída:</h3>
-  <div id="output"></div>
-
+  <!-- Scripts -->
   <script src="js/viewLoader.js"></script>
   <script src="js/pb-default_lexicon.js"></script>
   <script src="js/pb-default_rules.js"></script>
   <script src="js/resolver.js"></script>
+  <script src="js/pb-default_text.js"></script>
 
-  <script>
-    function normalizeWord(w) {
-      return w
-        .toLowerCase()
-        .normalize("NFC")
-        .trim();
-    }
+  <!-- G2PText -->
+  <div class="card fade-in" id="G2PText">
+    <h2>Português → Catipa</h2>
+    <textarea id="inputText" rows="5" placeholder="Digite ou cole um texto em português..."></textarea>
+    <p class="hint">Ctrl + Enter para converter</p>
+    <button class="btn-convert" onclick="runG2PText()">Converter</button>
+    <div class="output-wrap">
+      <div class="output-label">Saída Catipa</div>
+      <div id="outputText"></div>
+    </div>
+  </div>
 
-    function runG2P() {
-      const raw = document.getElementById("input").value;
-      const output = document.getElementById("output");
+  <!-- G2PWord -->
+  <div class="card fade-in" id="G2PWord" style="display:none;">
+    <h2>Palavra → Catipa</h2>
+    <textarea id="input" rows="1" placeholder="Digite uma palavra..."></textarea>
+    <button class="btn-convert" onclick="runG2PWord()" style="margin-top:14px;">Converter</button>
+    <div class="output-wrap">
+      <div class="output-label">Saída Catipa</div>
+      <div id="output"></div>
+    </div>
+  </div>
 
-      if (!raw.trim()) {
-        output.innerText = "";
-        return;
-      }
-
-      const word = normalizeWord(raw);
-
-      if (LEXICON[word]) {
-	    const entry = LEXICON[word];
-		const resolved = resolveEntry(entry, "interactive");
-		
-		if (resolved) {
-		  output.innerText = resolved;
-          return;
-        }
-		
-		showChoicePopup(word, entry.entries);
-		return;
-	  }
-
-      output.innerText = applyRules(word);
-    }
-	
-	document.getElementById("input").addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        runG2P();
-        e.target.select();
-      }
-    });
-	
-	window.onload = function () {
-      document.getElementById("input").focus();
-    };
-  </script>
+  <!-- choiceBox -->
   <div id="choiceBox" style="display:none;">
     <p id="choiceWord"></p>
-    <button id="choice1"></button>
-    <button id="choice2"></button>
+    <div class="choice-btns">
+      <button id="choice1"></button>
+      <button id="choice2"></button>
+    </div>
+    <p class="choice-hint">← / → para escolher com o teclado</p>
   </div>
-  </section>
-  
+
+  <!-- View (docs) -->
   <div id="view"></div>
-  
+
   <footer>
-    <small><p>&copy; 2019 - <script>document.write(new Date().getFullYear());</script> Junia da Costa</p></small>
+    &copy; 2019–<script>document.write(new Date().getFullYear())</script> Junia da Costa
   </footer>
-  </div>
-  
-  <script>
-  document.getElementById("menuBtn").onclick = () => {
-     const menu = document.getElementById("menu");
-     menu.style.display = menu.style.display === "none" ? "block" : "none";
+
+</div><!-- #app -->
+
+<script>
+  /* ── Menu ── */
+  document.getElementById("menuBtn").onclick = (e) => {
+    e.stopPropagation();
+    const m = document.getElementById("menu");
+    m.style.display = m.style.display === "block" ? "none" : "block";
   };
-  
-  function showG2P() {
-      document.getElementById("G2P").style.display = "block";
-      document.getElementById("view").innerHTML = "";
-      document.getElementById("menu").style.display = "none";
-      document.getElementById("input").focus();
+  document.addEventListener("click", () => {
+    document.getElementById("menu").style.display = "none";
+  });
+
+  /* ── Tabs ── */
+  function setTab(id) {
+    document.getElementById("tabText").classList.toggle("active", id === "text");
+    document.getElementById("tabWord").classList.toggle("active", id === "word");
+  }
+
+  function showG2PText() {
+    document.getElementById("G2PText").style.display = "block";
+    document.getElementById("G2PWord").style.display = "none";
+    document.getElementById("view").innerHTML = "";
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("modeTabs").style.display = "flex";
+    setTab("text");
+    document.getElementById("inputText").focus();
+  }
+
+  function showG2PWord() {
+    document.getElementById("G2PWord").style.display = "block";
+    document.getElementById("G2PText").style.display = "none";
+    document.getElementById("view").innerHTML = "";
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("modeTabs").style.display = "flex";
+    setTab("word");
+    document.getElementById("input").focus();
   }
 
   function showDoc(path) {
-      document.getElementById("G2P").style.display = "none";
-	  document.getElementById("menu").style.display = "none";
-      loadView(path);
+    document.getElementById("G2PText").style.display = "none";
+    document.getElementById("G2PWord").style.display = "none";
+    document.getElementById("modeTabs").style.display = "none";
+    document.getElementById("menu").style.display = "none";
+    loadView(path);
   }
-  </script>
-  
+
+  /* ── G2P Texto ── */
+  function runG2PText() {
+    const raw = document.getElementById("inputText").value;
+    const out = document.getElementById("outputText");
+    if (!raw.trim()) { out.innerText = ""; return; }
+    out.innerText = "…";
+    g2pTexto(raw, result => { out.innerText = result; });
+  }
+
+  document.getElementById("inputText").addEventListener("keydown", function(e) {
+    if (e.key === "Enter" && e.ctrlKey) { e.preventDefault(); runG2PText(); }
+  });
+
+  /* ── G2P Palavra ── */
+  function normalizeWord(w) {
+    return w.toLowerCase().normalize("NFC").trim();
+  }
+
+  function runG2PWord() {
+    const raw = document.getElementById("input").value;
+    const out = document.getElementById("output");
+    if (!raw.trim()) { out.innerText = ""; return; }
+    const word = normalizeWord(raw);
+    if (LEXICON[word]) {
+      const entry = LEXICON[word];
+      const resolved = resolveEntry(entry, "interactive");
+      if (resolved) { out.innerText = resolved; return; }
+      showChoicePopup(word, entry.entries);
+      return;
+    }
+    out.innerText = applyRules(word);
+  }
+
+  document.getElementById("input").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") { e.preventDefault(); runG2PWord(); e.target.select(); }
+  });
+
+  /* ── Boot ── */
+  window.onload = function() {
+    document.getElementById("inputText").focus();
+  };
+</script>
+
 </body>
 </html>
