@@ -5,6 +5,7 @@
 // =====================================
 
 const LEXICON = {
+	"a": "a0",
 	"abaixo-assinado": "a2 b a1 Y x u0 a2 s i2 n a1 d u0",
 	"abaixo-assinados": "a2 b a1 Y x u0 a2 s i2 n a1 d u0 s",
 	"abaixou": "a2 b a2 Y x o1 W",
@@ -30,6 +31,15 @@ const LEXICON = {
 	  entries : [
 	      { type: "substantivo", ipa: "a2 k o1 h d u0" },
           { type: "verbo", ipa: "a2 k oo1 h d u0" }
+      ]
+	},
+	"amo": "A1 m u0",
+	"ame": "A1 m i0",
+	"apoio": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "a2 p o1 y u0" },
+          { type: "verbo", ipa: "a2 p oo1 y u0" }
       ]
 	},
 	"beco": "b e1 k u0",
@@ -92,6 +102,7 @@ const LEXICON = {
           { type: "verbo", ipa: "m oo1 lh u0" }
       ]
 	},
+	"o": "u0",
 	"olho": {
 	  default : "substantivo",
 	  entries : [
@@ -102,6 +113,8 @@ const LEXICON = {
 	"ortodontologia": "oo2 h t o2 d O2 t o2 l o2 g i1 a0",
 	"ortodoxo": "oo2 h t oo2 d oo1 k s u0",
 	"próximo": "p r oo1 s i2 m u0",
+	"quero": "k ee1 r u0",
+	"quer": "k ee1 h",
 	"seca": {
 	  default : "substantivo",
 	  entries : [
@@ -126,6 +139,7 @@ const LEXICON = {
 	"sexo": "s ee1 k s u0",
 	"sexy": "s ee1 k s i0",
 	"show": "x o1 W",
+	"te": "tch i0",
 	"transar": "t r A2 z a1 h",
 	"transando": "t r A2 z A2 d u0",
 	"transou": "t r A2 z o1 W",
@@ -139,7 +153,7 @@ const LEXICON = {
 	"volto": "v oo1 W t u0"
 };
 
-function showChoicePopup(word, entries) {
+function showChoicePopup(word, entries, onChoose) {
   const box = document.getElementById("choiceBox");
   const title = document.getElementById("choiceWord");
   const btn1 = document.getElementById("choice1");
@@ -156,10 +170,14 @@ function showChoicePopup(word, entries) {
   btn2.innerText = opt2.type;
 
   function chooseOption(opt) {
-    output.innerText = opt.ipa;
     box.style.display = "none";
-    input.focus();
     document.removeEventListener("keydown", keyHandler);
+    if (typeof onChoose === "function") {
+      onChoose(opt);
+    } else {
+      output.innerText = opt.ipa;
+      input.focus();
+    }
   }
 
   btn1.onclick = () => chooseOption(opt1);
