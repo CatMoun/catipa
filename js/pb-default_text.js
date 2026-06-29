@@ -20,9 +20,9 @@ function g2pWord(word, resolutions) {
   if (resolutions && resolutions[w]) return resolutions[w];
   const entry = LEXICON[w];
   if (entry) {
-    return resolveEntry(entry, "synth") || applyRules(word);
+    return resolveEntry(entry, "synth") || applyRules(w);
   }
-  return applyRules(word);
+  return applyRules(w);
 }
 
 // -------------------------
