@@ -138,8 +138,13 @@ function applySandhi(catipaWords) {
 function g2pTexto(text, outputCallback) {
   if (!text || !text.trim()) return;
 
+  // Pré-processamento:
+  //   hífen, aspas (retas e curvas) e apóstrofo → espaço  (sem bloquear sandhi)
+  //   parênteses permanecem e bloqueiam sandhi junto com . , ; ! ? etc.
+  const normalized = text.trim().replace(/[-"'“”‘’]/g, ' ');
+
   // --- 1. Coleta palavras ambíguas únicas presentes no texto ---
-  const allWords = text.trim().split(/\s+/).map(w => w.toLowerCase().normalize("NFC").trim()).filter(Boolean);
+  const allWords = normalized.split(/\s+/).map(w => w.toLowerCase().normalize("NFC").trim()).filter(Boolean);
   const seen = new Set();
   const queue = [];
 
@@ -156,14 +161,14 @@ function g2pTexto(text, outputCallback) {
 
   // --- 2. Função que processa o texto depois de resolver todas as ambiguidades ---
   function runG2P() {
-    const parts = text.trim().split(/([.,;!?:—…\n]+)/);
+    const parts = normalized.split(/([.,;!?:—…\n()]+)/);
     const output = [];
 
     for (const part of parts) {
       const seg = part.trim();
       if (!seg) continue;
 
-      if (/^[.,;!?:—…\n]+$/.test(seg)) {
+      if (/^[.,;!?:—…\n()]+$/.test(seg)) {
         output.push('|');
         continue;
       }
