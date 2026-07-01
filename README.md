@@ -37,8 +37,7 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
 ## Planejamentos Futuros
 
 - Expansão do G2P para variedades regionais do português brasileiro;
-- Integração do inventário do português europeu ao G2P;
-- Desenvolvimento de previsão para os sons abertos /ee/ e /oo/.
+- Integração do inventário do português europeu ao G2P.
 
 ## Versões
 
@@ -69,7 +68,11 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
   - atualização de léxico e regras
 - v2.0.0 (28-06-2026)
   - G2P de texto incluído
+  - desenvolvimento de previsão para os sons abertos /ee/ e /oo/
   - atualização de léxico e regras
   - novo visual
 - v2.0.1 (29-06-2026)
   - consertado bug de texto
+- v2.0.2 (30-06-2026)
+  - identificação de pontuações atualizadas em G2p Texto
+  - atualização de léxico
