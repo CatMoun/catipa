@@ -115,6 +115,8 @@ const LEXICON = {
 	"próximo": "p r oo1 s i2 m u0",
 	"quero": "k ee1 r u0",
 	"quer": "k ee1 h",
+	"rock": "h oo1 k i0",
+	"roque": "h oo1 k i0",
 	"seca": {
 	  default : "substantivo",
 	  entries : [
@@ -150,7 +152,9 @@ const LEXICON = {
 	"velhas": "v ee1 lh a0 s",
 	"velho": "v ee1 lh u0",
 	"velhos": "v ee1 lh u0 s",
-	"volto": "v oo1 W t u0"
+	"volto": "v oo1 W t u0",
+	"xereca": "x ee2 r ee1 k a0",
+	"zoca": "z oo1 k a0"
 };
 
 function showChoicePopup(word, entries, onChoose) {
