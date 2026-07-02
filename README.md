@@ -76,3 +76,6 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
 - v2.0.2 (30-06-2026)
   - identificação de pontuações atualizadas em G2p Texto
   - atualização de léxico
+- v2.0.3 (02-07-2026)
+  - atualização de inventório pb e pe
+  - atualização de léxico
