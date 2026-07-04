@@ -1,5 +1,6 @@
 // =====================================
-// Catipa – Codificação Fonêmica para o Português
+// Catipa*pb – Codificação Fonêmica-Fonética para o Português Brasileiro
+// Version: Neutro
 // Copyright (c) 2019–2026 Junia da Costa
 // Licensed under the MIT License
 // =====================================
@@ -26,7 +27,6 @@ const LEXICON = {
 	"acessam": "a2 s ee1 s A0 W",
 	"acesso": "a2 s ee1 s u0",
 	"acessos": "a2 s ee1 s u0 s",
-	///1500
 	"acordo": {
 	  default : "substantivo",
 	  entries : [
@@ -548,7 +548,7 @@ const LEXICON = {
 	"zoca": "z oo1 k a0"
 };
 
-function showChoicePopup(word, entries, onChoose) {
+function showChoicePopup(word, entries, onChoose, titleText) {
   const box = document.getElementById("choiceBox");
   const title = document.getElementById("choiceWord");
   const btn1 = document.getElementById("choice1");
@@ -559,7 +559,7 @@ function showChoicePopup(word, entries, onChoose) {
   const opt1 = entries[0];
   const opt2 = entries[1];
 
-  title.innerText = `Escolha a pronúncia de "${word}":`;
+  title.innerText = titleText || `Escolha a pronúncia de "${word}":`;
 
   btn1.innerText = opt1.type;
   btn2.innerText = opt2.type;
