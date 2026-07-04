@@ -1,0 +1,124 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --bg:     #0c0917;
+  --card:   rgba(255,255,255,0.055);
+  --border: rgba(180,140,255,0.18);
+  --accent: #c9a6ff;
+  --text:   #ede6ff;
+  --muted:  rgba(237,230,255,0.50);
+  --radius: 16px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+}
+
+.doc-page {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  overflow-x: auto;
+}
+
+.doc-page h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 6px;
+}
+.doc-page h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  margin: 24px 0 8px;
+}
+.doc-page h4 {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin: 28px 0 14px;
+}
+.doc-page > h2:first-child { margin-top: 0; }
+.doc-page > h4:first-of-type { margin-top: 4px; }
+
+.doc-page p {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 14px;
+  text-align: center;
+}
+.doc-page p b, .doc-page td b, .doc-page th b { color: var(--accent); font-weight: 600; }
+
+.doc-page ul {
+  list-style: none;
+  margin: 0 auto 16px;
+  max-width: 420px;
+  padding: 0;
+}
+.doc-page ul li {
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  margin-bottom: 6px;
+  background: rgba(0,0,0,0.20);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+}
+
+.doc-page a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(201,166,255,0.4); }
+.doc-page a:hover { border-bottom-color: var(--accent); }
+
+.doc-page table {
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 0.85rem;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.doc-page th, .doc-page td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.6;
+  color: var(--text);
+  white-space: normal;
+  overflow-wrap: break-word;
+  vertical-align: top;
+  min-width: 3.2em;
+}
+.doc-page th {
+  background: rgba(155,114,212,0.20);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.doc-page tr:last-child td { border-bottom: none; }
+.doc-page tr:hover td { background: rgba(255,255,255,0.035); }
+.doc-page td:first-child { color: var(--accent); font-weight: 600; }
+
+.doc-page hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 32px 0;
+}
