@@ -1,19 +1,10 @@
 // =====================================
-// Catipa – G2P de Texto
-// Converte texto corrido para Catipa,
-// aplicando regras de sandhi entre palavras.
-// Requer (carregar antes): pb-default_lexicon.js,
-//                          pb-default_rules.js,
-//                          resolver.js
+// Catipa*pb – Codificação Fonêmica-Fonética para o Português Brasileiro
+// Version: Neutro
 // Copyright (c) 2019–2026 Junia da Costa
 // Licensed under the MIT License
 // =====================================
 
-// -------------------------
-// Converte uma palavra isolada para Catipa.
-// Aceita um mapa opcional de resoluções pré-escolhidas (modo texto).
-// Sem resoluções, usa o default do léxico ("synth").
-// -------------------------
 function g2pWord(word, resolutions) {
   const w = word.toLowerCase().normalize("NFC").trim();
   if (!w) return "";
@@ -25,21 +16,12 @@ function g2pWord(word, resolutions) {
   return applyRules(w);
 }
 
-// -------------------------
-// Retorna a qualidade vocálica de um token Catipa:
-// 'a' | 'e' | 'i' | 'o' | 'u' | null
-// -------------------------
 function getVowelQuality(token) {
   if (!token) return null;
-  // aa1/aa2 e A-maiúsculo (nasal) → qualidade 'a'
   if (/^(aa|[aA])/.test(token)) return 'a';
-  // ee1/ee2 e E-maiúsculo (nasal) → qualidade 'e'
   if (/^[eE]/.test(token))      return 'e';
-  // i e I-maiúsculo (nasal) → qualidade 'i'
   if (/^[iI]/.test(token))      return 'i';
-  // oo1/oo2 e O-maiúsculo (nasal) → qualidade 'o'
   if (/^[oO]/.test(token))      return 'o';
-  // u e U-maiúsculo (nasal) → qualidade 'u'
   if (/^[uU]/.test(token))      return 'u';
   return null;
 }
@@ -48,22 +30,92 @@ function isVowelToken(token) {
   return getVowelQuality(token) !== null;
 }
 
-// -------------------------
-// Aplica as regras de sandhi entre palavras de um segmento
-// (já separado nas fronteiras de frase pela pontuação).
-//
-// Regras:
-//  1. s final + vogal         → z
-//  2. h final + vogal         → r  (linking-r)
-//  3. i0 final + vogal-i      → absorção  (i0 cai)
-//  4. i0 final + outra vogal  → y  (glide palatal)
-//  5. u0 final + vogal-u      → absorção  (u0 cai)
-//  6. u0 final + outra vogal  → w  (glide labial)
-//  7. a0 final + vogal-a      → absorção  (a0 cai)
-//  8. a0 final + outra vogal  → permanece (/a/ não tem glide)
-// -------------------------
-function applySandhi(catipaWords) {
-  // Tokeniza cada saída Catipa em arrays de tokens
+function isVoicedConsonant(token) {
+  return /^(b|d|dj|g|v|z|j|m|n|l|lh|nh|r|y|w)$/.test(token);
+}
+
+function classifyJunction(curr, next) {
+  const last  = curr[curr.length - 1];
+  const first = next[0];
+
+  if (!isVowelToken(first)) {
+    if (last === 's' && isVoicedConsonant(first)) return { action: 'set', token: 'z' };
+    return { action: 'none' };
+  }
+
+  const nextQ = getVowelQuality(first);
+
+  if (last === 's') return { action: 'set', token: 'z' };
+  if (last === 'h') return { action: 'set', token: 'r' };
+
+  if (last === 'W') {
+    return nextQ === 'u' ? { action: 'pop' } : { action: 'set', token: 'w' };
+  }
+  if (last === 'Y') {
+    return nextQ === 'i' ? { action: 'pop' } : { action: 'set', token: 'y' };
+  }
+
+  const prev = curr.length > 1 ? curr[curr.length - 2] : null;
+  if (prev === 'y' || prev === 'w' || prev === 'Y' || prev === 'W') return { action: 'none' };
+
+  if (last === 'i0') {
+    if (nextQ === 'i') return { action: 'pop' };
+    return { action: 'choice', options: [
+      { type: 'Reduzir', action: 'set', token: 'y' },
+      { type: 'Apagar',  action: 'pop' }
+    ]};
+  }
+
+  if (last === 'u0') {
+    if (nextQ === 'u') return { action: 'pop' };
+    return { action: 'choice', options: [
+      { type: 'Reduzir', action: 'set', token: 'w' },
+      { type: 'Apagar',  action: 'pop' }
+    ]};
+  }
+
+  if (last === 'a0') {
+    if (nextQ === 'a') return { action: 'pop' };
+    return { action: 'choice', options: [
+      { type: 'Manter', action: 'none' },
+      { type: 'Apagar', action: 'pop' }
+    ]};
+  }
+
+  return { action: 'none' };
+}
+
+function applyJunctionAction(curr, act) {
+  if (act.action === 'set')      curr[curr.length - 1] = act.token;
+  else if (act.action === 'pop') curr.pop();
+}
+
+function collectSandhiChoices(catipaWords, words) {
+  const wt = catipaWords.map(c => c.trim().split(/\s+/).filter(t => t));
+  const found = [];
+
+  for (let i = 0; i < wt.length - 1; i++) {
+    const curr = wt[i];
+    const next = wt[i + 1];
+    if (!curr.length || !next.length) continue;
+
+    const act = classifyJunction(curr, next);
+    if (act.action !== 'choice') continue;
+
+    const key = words[i] + ' ' + words[i + 1];
+    found.push({
+      key,
+      options: act.options.map(opt => {
+        const c = curr.slice();
+        applyJunctionAction(c, opt);
+        return { type: opt.type, ipa: c.concat(next).join(' ') };
+      })
+    });
+  }
+  return found;
+}
+
+function applySandhi(catipaWords, words, sandhiResolutions) {
   const wt = catipaWords.map(c => c.trim().split(/\s+/).filter(t => t));
 
   for (let i = 0; i < wt.length - 1; i++) {
@@ -71,79 +123,25 @@ function applySandhi(catipaWords) {
     const next = wt[i + 1];
     if (!curr.length || !next.length) continue;
 
-    const last  = curr[curr.length - 1];
-    const first = next[0];
+    let act = classifyJunction(curr, next);
 
-    // Próxima palavra começa com consoante → sem sandhi
-    if (!isVowelToken(first)) continue;
-
-    const nextQ = getVowelQuality(first);
-
-    // Regra 1: s + vogal → z
-    if (last === 's') {
-      curr[curr.length - 1] = 'z';
-      continue;
+    if (act.action === 'choice') {
+      const key = words ? words[i] + ' ' + words[i + 1] : null;
+      const chosenType = key && sandhiResolutions ? sandhiResolutions[key] : null;
+      act = act.options.find(o => o.type === chosenType) || act.options[0];
     }
 
-    // Regra 2: h + vogal → r (linking-r)
-    if (last === 'h') {
-      curr[curr.length - 1] = 'r';
-      continue;
-    }
-
-    // Regras 3-4: i0 final
-    if (last === 'i0') {
-      if (nextQ === 'i') {
-        curr.pop();           // absorção
-      } else {
-        curr[curr.length - 1] = 'y'; // glide
-      }
-      continue;
-    }
-
-    // Regras 5-6: u0 final
-    if (last === 'u0') {
-      if (nextQ === 'u') {
-        curr.pop();           // absorção
-      } else {
-        curr[curr.length - 1] = 'w'; // glide
-      }
-      continue;
-    }
-
-    // Regras 7-8: a0 final
-    if (last === 'a0') {
-      if (nextQ === 'a') {
-        curr.pop();           // absorção
-      }
-      // caso contrário: permanece
-      continue;
-    }
+    applyJunctionAction(curr, act);
   }
 
-  // Achata todos os tokens num único array e une com espaço
   return wt.flat().join(' ');
 }
 
-// -------------------------
-// Converte texto corrido para Catipa.
-// Pontuação (. , ; ! ? : — …) cria fronteira de frase,
-// bloqueando as regras de sandhi. Fronteiras são
-// representadas por " | " na saída.
-//
-// Palavras ambíguas no léxico (com múltiplas entradas) acionam
-// o popup de escolha uma a uma, em sequência, antes de processar
-// o texto. O resultado final é exibido via outputCallback(result).
-// -------------------------
 function g2pTexto(text, outputCallback) {
   if (!text || !text.trim()) return;
 
-  // Pré-processamento:
-  //   hífen, aspas (retas e curvas) e apóstrofo → espaço  (sem bloquear sandhi)
-  //   parênteses permanecem e bloqueiam sandhi junto com . , ; ! ? etc.
   const normalized = text.trim().replace(/[-"'“”‘’]/g, ' ');
 
-  // --- 1. Coleta palavras ambíguas únicas presentes no texto ---
   const allWords = normalized.split(/\s+/).map(w => w.toLowerCase().normalize("NFC").trim()).filter(Boolean);
   const seen = new Set();
   const queue = [];
@@ -157,40 +155,78 @@ function g2pTexto(text, outputCallback) {
     }
   }
 
-  const resolutions = {}; // word → ipa escolhido
+  const resolutions = {};
 
-  // --- 2. Função que processa o texto depois de resolver todas as ambiguidades ---
   function runG2P() {
     const parts = normalized.split(/([.,;!?:—…\n()]+)/);
-    const output = [];
+    const segs = [];
 
     for (const part of parts) {
       const seg = part.trim();
       if (!seg) continue;
 
       if (/^[.,;!?:—…\n()]+$/.test(seg)) {
-        output.push('|');
+        segs.push('|');
         continue;
       }
 
-      const words  = seg.split(/\s+/).filter(w => w.length > 0);
-      const catipa = words.map(w => g2pWord(w, resolutions)).filter(c => c);
-      if (!catipa.length) continue;
+      const ws    = seg.split(/\s+/).filter(w => w.length > 0);
+      const pairs = ws
+        .map(w => ({ w: w.toLowerCase().normalize("NFC"), c: g2pWord(w, resolutions) }))
+        .filter(p => p.c);
+      if (!pairs.length) continue;
 
-      output.push(applySandhi(catipa));
+      segs.push({ words: pairs.map(p => p.w), catipa: pairs.map(p => p.c) });
     }
 
-    const result = output
-      .join(' ')
-      .replace(/\s*\|\s*/g, ' | ')
-      .replace(/^\s*\|\s*/, '')
-      .replace(/\s*\|\s*$/, '')
-      .trim();
+    const sandhiResolutions = {};
+    const squeue = [];
+    const seenPairs = new Set();
 
-    if (typeof outputCallback === "function") outputCallback(result);
+    for (const s of segs) {
+      if (s === '|') continue;
+      for (const ch of collectSandhiChoices(s.catipa, s.words)) {
+        if (seenPairs.has(ch.key)) continue;
+        seenPairs.add(ch.key);
+        squeue.push(ch);
+      }
+    }
+
+    function finish() {
+      const output = segs.map(s =>
+        s === '|' ? '|' : applySandhi(s.catipa, s.words, sandhiResolutions)
+      );
+
+      const result = output
+        .join(' ')
+        .replace(/\s*\|\s*/g, ' | ')
+        .replace(/^\s*\|\s*/, '')
+        .replace(/\s*\|\s*$/, '')
+        .trim();
+
+      if (typeof outputCallback === "function") outputCallback(result);
+    }
+
+    function nextSandhiChoice() {
+      if (!squeue.length) {
+        finish();
+        return;
+      }
+      const ch = squeue.shift();
+      if (typeof showChoicePopup !== "function") {
+        sandhiResolutions[ch.key] = ch.options[0].type;
+        nextSandhiChoice();
+        return;
+      }
+      showChoicePopup(ch.key, ch.options, (chosen) => {
+        sandhiResolutions[ch.key] = chosen.type;
+        nextSandhiChoice();
+      }, `Como juntar "${ch.key}"?`);
+    }
+
+    nextSandhiChoice();
   }
 
-  // --- 3. Resolve ambiguidades em sequência via popup ---
   function resolveNext() {
     if (!queue.length) {
       runG2P();
