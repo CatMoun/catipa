@@ -82,3 +82,7 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
 - v2.1.0 (02-07-2026)
   - preparação para o G2P Europeu
   - atualização de léxico e regras
+- v3.0.0 (04-07-2026)
+  - português europeu adicionado
+  - G2P Palavra descontinuado
+  - todos os arquivos foram melhorados
