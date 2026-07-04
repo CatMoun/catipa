@@ -1,10 +1,11 @@
-async function loadView(path) {
-      const view = document.getElementById("view");
-      
-      view.innerHTML = "Carregando…";
-      
-      const res = await fetch(path, { cache: "no-store" });
-      const html = await res.text();
-      
-      view.innerHTML = html;
+function loadView(path) {
+  const frame = document.getElementById("viewFrame");
+  frame.src = path;
 }
+
+window.addEventListener("message", function (e) {
+  if (e.data && e.data.source === "catipa-view" && typeof e.data.height === "number") {
+    const frame = document.getElementById("viewFrame");
+    if (frame) frame.style.height = e.data.height + "px";
+  }
+});
