@@ -1,31 +1,39 @@
-<h2>Encontrou um erro?</h2>
-<table border="1" width="100%">
-      <tr>
-	      <th colspan="3">O G2P do Catipa está em constante desenvolvimento</th>
-      </tr>
-	  <tr>
-	      <td colspan="3">Portanto, se você encontrar:</td>
-	  </tr>
-	  <tr>
-	     <td>pronúncia inesperada</td>
-		 <td>conversão incorreta</td>
-		 <td>comportamento inconsistente</td>
-	  </tr>
-	  <tr>
-	     <th colspan="3">Por favor, registre um problema (issue) no GitHub:</th>
-	  </tr>
-	  <tr>
-	     <td colspan="3"><a href="https://github.com/CatMoun/catipa/issues" target="_blank">https://github.com/CatMoun/catipa/issues</a>
-	  </tr>
-	  <tr>
-	     <td colspan="3">Inclua, se possível:</td>
-	  </tr>
-	  <tr>
-	     <td>a palavra testada</td>
-		 <td>o resultado obtido</td>
-		 <td>o resultado esperado</td>
-	  </tr>
-	  <tr>
-	     <td colspan="3">Isso ajuda a melhorar o Catipa para todos.</td>
-	  </tr>
-</table>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+<div class="doc-page">
+  <h2>Encontrou um erro?</h2>
+  <p>O G2P do Catipa está em constante desenvolvimento. Portanto, se você encontrar:</p>
+  <ul>
+    <li>pronúncia inesperada</li>
+    <li>conversão incorreta</li>
+    <li>comportamento inconsistente</li>
+  </ul>
+  <p>Por favor, registre um problema (issue) no GitHub:</p>
+  <p><a href="https://github.com/CatMoun/catipa/issues" target="_blank">github.com/CatMoun/catipa/issues</a></p>
+  <p>Inclua, se possível:</p>
+  <ul>
+    <li>a palavra testada</li>
+    <li>o resultado obtido</li>
+    <li>o resultado esperado</li>
+  </ul>
+  <p>Isso ajuda a melhorar o Catipa para todos.</p>
+</div>
+<script>
+  function catipaSendHeight() {
+    parent.postMessage({ source: "catipa-view", height: document.body.scrollHeight }, "*");
+  }
+  window.addEventListener("load", catipaSendHeight);
+  window.addEventListener("resize", catipaSendHeight);
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(catipaSendHeight); }
+  if (window.ResizeObserver) { new ResizeObserver(catipaSendHeight).observe(document.body); }
+  catipaSendHeight();
+</script>
+</body>
+</html>
