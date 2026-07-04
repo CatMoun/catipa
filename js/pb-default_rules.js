@@ -1,5 +1,6 @@
 // =====================================
-// Catipa – Codificação Fonêmica para o Português
+// Catipa*pb – Codificação Fonêmica-Fonética para o Português Brasileiro
+// Version: Neutro
 // Copyright (c) 2019–2026 Junia da Costa
 // Licensed under the MIT License
 // =====================================
@@ -67,18 +68,18 @@ function applyRules(word) {
   w = w.replace(/sc(?=[eêéií])/g, "s");
   w = w.replace(/xc/g, "s");
   w = w.replace(/(?<!^)(?<![iu])x(?=[aâáãeêéiíoôóuú])/g, "z");
-  w = w.replace(/(?<=e)xar\s*$/g, "ksar"); // anexar, indexar; não afeta deixar/puxar/relaxar
+  w = w.replace(/(?<=e)xar\s*$/g, "ksar");
   w = w.replace(/ç/g, "s");
   w = w.replace(/c(?=[aâáãoôóuú])/g, "k");
   w = w.replace(/c(?=[eêéií])/g, "s");
   w = w.replace(/c(?![aâáãeêéiíoôóuúh])/g, "k");
   w = w.replace(/d(?=[ií])/g, "dj");
   w = w.replace(/de\s*$/, "dje");
-  w = w.replace(/des\s*$/, "djes"); // paredes, cidades, grandes
+  w = w.replace(/des\s*$/, "djes");
   w = w.replace(/^ch|(?<!t)ch/g, "x");
   w = w.replace(/t(?=[ií])/g, "tch");
   w = w.replace(/te\s*$/, "tche");
-  w = w.replace(/tes\s*$/, "tches"); // antes, dentes, noites
+  w = w.replace(/tes\s*$/, "tches");
 
   // =========================
   // DITONGOS
@@ -91,7 +92,6 @@ function applyRules(word) {
   }
   w = w.replace(/([aâáeêéiíoôó])\s*u/g, "$1W");
   if (/l\s*$/.test(w) && !/[áéêíóôúâãõ]/.test(w)) {
-	  // oxítonas em -l: papel/anel → é aberto; sem acento gráfico na palavra
 	  w = w.replace(/al/g, "ál");
 	  w = w.replace(/el/g, "él");
 	  w = w.replace(/il/g, "íl");
@@ -204,16 +204,15 @@ function applyRules(word) {
   w = w.replace(/u(?![0-9])/g, "u2 ");
 
   if (hasGraphicAccent) {
-    // palavra já tem sílaba tônica marcada: final i/u é átono (táxi, ônibus, açúcar)
     w = w.replace(/([iIuU])2\s*$/, "$10 ");
     w = w.replace(/([iIuU])2\s*s$/, "$10 s");
-    w = w.replace(/([iIuU])2(\s*[WY])\s*$/, "$10$2"); // fácil → f a1 s i0 W
+    w = w.replace(/([iIuU])2(\s*[WY])\s*$/, "$10$2");
   } else {
     w = w.replace(/([iIuU])2\s*$/, "$11 ");
     w = w.replace(/([iIuU])2\s*s$/, "$11 s");
     w = w.replace(/([aeiou])2\s*h\s*$/, "$11 h");
     w = w.replace(/([aeiouAEIOU])2(\s*[WY])\s*$/, "$11$2");
-    w = w.replace(/([aeiouAEIOU])2(\s*[WY])\s*s\s*$/, "$11$2s"); // depois, demais
+    w = w.replace(/([aeiouAEIOU])2(\s*[WY])\s*s\s*$/, "$11$2s");
   }
 
   if (!w.includes("1")) {
@@ -222,15 +221,13 @@ function applyRules(word) {
     }
 
     if (!w.includes("1")) {
-      // paroxítona: acentua a vogal seguida de exatamente mais uma vogal
-      // (a final pode já estar reduzida a 0, ex.: "falaram" → ...a2 r A0 W)
       w = w.replace(/([aeiouAEIOU])2(?=[^aeiouAEIOU]*[aeiouAEIOU][02][^aeiouAEIOU12]*$)/, "$11");
     }
   }
 
   w = w.replace(/&/g, "ee");
   w = w.replace(/#/g, "oo");
-  w = w.replace(/@/g, "a"); // â sem contexto nasal: default fonêmico /a/ ([ə] lexical → "ac" no léxico)
+  w = w.replace(/@/g, "a");
   w = w.replace(/cn/g, "ki2 n");
 
   // =========================
@@ -285,8 +282,8 @@ function applyRules(word) {
   w = w.replace(/(?<!e)e1 h (?=(?!dj)\S)/g, "ee1 h ");
   const encodedVowelCount = (w.match(/[aeiouAEIOU][012]/g) || []).length;
   if (!hasGraphicAccent && morphClass === "verb-open") {
-    w = w.replace(/\bo1\b(?!\s*[WY])/g, "oo1"); // ditongo não abre: noite, oito
-    w = w.replace(/\be1\b(?!\s*[WY])/g, "ee1"); // ditongo não abre: leite, azeite
+    w = w.replace(/\bo1\b(?!\s*[WY])/g, "oo1");
+    w = w.replace(/\be1\b(?!\s*[WY])/g, "ee1");
   }
 
   w = w.replace(/v e2 W\s*$/, "v e0 W");
@@ -302,7 +299,6 @@ function applyRules(word) {
   w = w.replace(/(?<!o)o1 z i0/g,   "oo1 z i0");
   w = w.replace(/(?<!o)o1 dj i0/g,  "oo1 dj i0");
 
-  // /a/ tônico antes de m/n + vogal nasaliza: cama, ano, exame, banana
   w = w.replace(/a1 ([mn]) (?=[aeiouAEIOU])/g, "A1 $1 ");
   w = w.replace(/E0\s*$/g,   "E0 Y");
   w = w.replace(/E1\s*$/g,   "E1 Y");
@@ -314,13 +310,11 @@ function applyRules(word) {
     w = w.replace(/A1 ([bdfgjklmnprstvx]) o2 W/g, "A2 $1 o1 W");
   }
   w = w.replace(/o1 w u0 s/g, "o1 w o0 s");
-
-  // hiato pós-tônico final → glide: família, vários, história, área, pátio
   w = w.replace(/i2 ([aou]0)(\s*s)?\s*$/, "y $1$2");
   w = w.replace(/e2 ([aou]0)(\s*s)?\s*$/, "y $1$2");
-  w = w.replace(/i2 i0(\s*s)?\s*$/, "i0$1"); // série → s ee1 r i0
-  // feminino -osa é aberto: famosa, idosa (exceção: esposa, no léxico)
+  w = w.replace(/i2 i0(\s*s)?\s*$/, "i0$1");
   w = w.replace(/(?<!o)o1 z a0(\s*s)?\s*$/, "oo1 z a0$1");
+  w = w.replace(/(tch|dj) y(?=\s)/g, "$1");
 
   w = w.trim();
 
