@@ -493,7 +493,7 @@
   /* ── Boot ── */
   window.onload = function() {
     const lastVariant = localStorage.getItem("catipaLastVariant");
-    if (lastVariant === "pe") { showVariant("pe"); }
+    showVariant(lastVariant === "pe" ? "pe" : "pb");
     document.getElementById("inputText").focus();
   };
 </script>
