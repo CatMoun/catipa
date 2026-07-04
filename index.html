@@ -61,7 +61,7 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 560px;
+      max-width: 800px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -324,10 +324,29 @@
     #view { width: 100%; }
     #view iframe {
       width: 100%;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: #fff;
+      display: block;
+      border: none;
+      background: transparent;
+      min-height: 80px;
     }
+
+    .back-btn {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-bottom: 4px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .back-btn:hover { background: var(--card-b); border-color: var(--primary); }
 
     /* ── Footer ── */
     footer {
@@ -351,13 +370,13 @@
   <header>
     <div>
       <h1>Catipa</h1>
-      <div class="version">v2.1.0 &nbsp;·&nbsp; G2P</div>
+      <div class="version">v3.0.0 &nbsp;·&nbsp; G2P de Codificação Fonêmico-Fonética Alfanumérica para o Português</div>
     </div>
     <div style="position:relative;">
       <button id="menuBtn" title="Menu">☰</button>
       <div id="menu">
-        <button onclick="showG2PText()">G2P Texto</button>
-        <button onclick="showG2PWord()">G2P Palavra</button>
+        <button onclick="showVariant('pb')">G2P Brasileiro</button>
+        <button onclick="showVariant('pe')">G2P Europeu</button>
         <hr>
         <button onclick="showDoc('view/about.html')">Sobre</button>
         <button onclick="showDoc('view/report.html')">Encontrou um erro?</button>
@@ -367,39 +386,31 @@
     </div>
   </header>
 
-  <!-- Mode tabs -->
+  <!-- Variant tabs -->
   <div class="mode-tabs" id="modeTabs">
-    <button id="tabText"   onclick="showG2PText()" class="active">Texto</button>
-    <button id="tabWord"   onclick="showG2PWord()">Palavra</button>
+    <button id="tabPB" onclick="showVariant('pb')" class="active">Brasileiro</button>
+    <button id="tabPE" onclick="showVariant('pe')">Europeu</button>
   </div>
 
   <!-- Scripts -->
   <script src="js/viewLoader.js"></script>
   <script src="js/pb-default_lexicon.js"></script>
   <script src="js/pb-default_rules.js"></script>
-  <script src="js/resolver.js"></script>
   <script src="js/pb-default_text.js"></script>
+  <script src="js/pe-lisboa_lexicon.js"></script>
+  <script src="js/pe-lisboa_rules.js"></script>
+  <script src="js/pe-lisboa_text.js"></script>
+  <script src="js/resolver.js"></script>
 
   <!-- G2PText -->
   <div class="card fade-in" id="G2PText">
-    <h2>Português → Catipa</h2>
-    <textarea id="inputText" rows="5" placeholder="Digite ou cole um texto em português..."></textarea>
-    <p class="hint">Ctrl + Enter para converter</p>
+    <h2 id="cardTitle">Português (Brasil) → Catipa</h2>
+    <textarea id="inputText" rows="5" placeholder="Digite ou cole uma frase em português..."></textarea>
+    <p class="hint">Enter para converter</p>
     <button class="btn-convert" onclick="runG2PText()">Converter</button>
     <div class="output-wrap">
-      <div class="output-label">Saída Catipa</div>
+      <div class="output-label" id="outputLabel">Saída Catipa*pb</div>
       <div id="outputText"></div>
-    </div>
-  </div>
-
-  <!-- G2PWord -->
-  <div class="card fade-in" id="G2PWord" style="display:none;">
-    <h2>Palavra → Catipa</h2>
-    <textarea id="input" rows="1" placeholder="Digite uma palavra..."></textarea>
-    <button class="btn-convert" onclick="runG2PWord()" style="margin-top:14px;">Converter</button>
-    <div class="output-wrap">
-      <div class="output-label">Saída Catipa</div>
-      <div id="output"></div>
     </div>
   </div>
 
@@ -414,7 +425,10 @@
   </div>
 
   <!-- View (docs) -->
-  <div id="view"></div>
+  <button id="backBtn" class="back-btn" onclick="showVariant(currentVariant)">← Voltar</button>
+  <div id="view">
+    <iframe id="viewFrame" title="Documentação Catipa" scrolling="no"></iframe>
+  </div>
 
   <footer>
     &copy; 2019–<script>document.write(new Date().getFullYear())</script> Junia da Costa
@@ -433,37 +447,32 @@
     document.getElementById("menu").style.display = "none";
   });
 
-  /* ── Tabs ── */
-  function setTab(id) {
-    document.getElementById("tabText").classList.toggle("active", id === "text");
-    document.getElementById("tabWord").classList.toggle("active", id === "word");
-  }
+  /* ── Variante (PB / PE) ── */
+  let currentVariant = "pb";
 
-  function showG2PText() {
+  function showVariant(variant) {
+    currentVariant = variant;
+    localStorage.setItem("catipaLastVariant", variant);
+    document.getElementById("tabPB").classList.toggle("active", variant === "pb");
+    document.getElementById("tabPE").classList.toggle("active", variant === "pe");
+    document.getElementById("cardTitle").innerText =
+      variant === "pe" ? "Português Europeu (Lisboa) → Catipa*pe" : "Português Brasileiro (Neutro) → Catipa*pb";
+    document.getElementById("outputLabel").innerText =
+      variant === "pe" ? "Saída Catipa*pe" : "Saída Catipa*pb";
     document.getElementById("G2PText").style.display = "block";
-    document.getElementById("G2PWord").style.display = "none";
-    document.getElementById("view").innerHTML = "";
+    document.getElementById("viewFrame").src = "about:blank";
+    document.getElementById("backBtn").style.display = "none";
     document.getElementById("menu").style.display = "none";
     document.getElementById("modeTabs").style.display = "flex";
-    setTab("text");
+    document.getElementById("outputText").innerText = "";
     document.getElementById("inputText").focus();
-  }
-
-  function showG2PWord() {
-    document.getElementById("G2PWord").style.display = "block";
-    document.getElementById("G2PText").style.display = "none";
-    document.getElementById("view").innerHTML = "";
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("modeTabs").style.display = "flex";
-    setTab("word");
-    document.getElementById("input").focus();
   }
 
   function showDoc(path) {
     document.getElementById("G2PText").style.display = "none";
-    document.getElementById("G2PWord").style.display = "none";
     document.getElementById("modeTabs").style.display = "none";
     document.getElementById("menu").style.display = "none";
+    document.getElementById("backBtn").style.display = "flex";
     loadView(path);
   }
 
@@ -473,39 +482,18 @@
     const out = document.getElementById("outputText");
     if (!raw.trim()) { out.innerText = ""; return; }
     out.innerText = "…";
-    g2pTexto(raw, result => { out.innerText = result; });
+    const g2p = currentVariant === "pe" ? g2pTextoPE : g2pTexto;
+    g2p(raw, result => { out.innerText = result; });
   }
 
   document.getElementById("inputText").addEventListener("keydown", function(e) {
-    if (e.key === "Enter" && e.ctrlKey) { e.preventDefault(); runG2PText(); }
-  });
-
-  /* ── G2P Palavra ── */
-  function normalizeWord(w) {
-    return w.toLowerCase().normalize("NFC").trim();
-  }
-
-  function runG2PWord() {
-    const raw = document.getElementById("input").value;
-    const out = document.getElementById("output");
-    if (!raw.trim()) { out.innerText = ""; return; }
-    const word = normalizeWord(raw);
-    if (LEXICON[word]) {
-      const entry = LEXICON[word];
-      const resolved = resolveEntry(entry, "interactive");
-      if (resolved) { out.innerText = resolved; return; }
-      showChoicePopup(word, entry.entries);
-      return;
-    }
-    out.innerText = applyRules(word);
-  }
-
-  document.getElementById("input").addEventListener("keydown", function(e) {
-    if (e.key === "Enter") { e.preventDefault(); runG2PWord(); e.target.select(); }
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); runG2PText(); }
   });
 
   /* ── Boot ── */
   window.onload = function() {
+    const lastVariant = localStorage.getItem("catipaLastVariant");
+    if (lastVariant === "pe") { showVariant("pe"); }
     document.getElementById("inputText").focus();
   };
 </script>
