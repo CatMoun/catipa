@@ -115,6 +115,7 @@ function applyRules(word) {
   w = w.replace(/dr/g, "§D§");
   w = w.replace(/gr/g, "§G§");
   w = w.replace(/fr/g, "§F§");
+  w = w.replace(/vr/g, "§V§");
   w = w.replace(/n(?=[aâáãeêéiíoôóuú])/g, "§N2§");
   w = w.replace(/m(?=[aâáãeêéiíoôóuú])/g, "§M§");
 
@@ -190,6 +191,7 @@ function applyRules(word) {
   w = w.replace(/§D§/g, "dr");
   w = w.replace(/§G§/g, "gr");
   w = w.replace(/§F§/g, "fr");
+  w = w.replace(/§V§/g, "vr");
   w = w.replace(/§N2§/g, "n");
   w = w.replace(/§M§/g, "m");
 
@@ -242,6 +244,10 @@ function applyRules(word) {
   w = w.replace(/o2\s*$/, "u0 ");
   w = w.replace(/o2\s*s$/, "u0 s");
   w = w.replace(/u2\s*$/, "u0 ");
+
+  // Redução da postônica não-final (Grau 2): /a/ átono medial pós-tônico
+  // reduz igual à postônica final (mesmo token "a0"); "ac" foi eliminado do PB.
+  w = w.replace(/(?<=1[^1]*)a2/g, "a0");
 
   w = w.replace(/A2\s*$/, "A0 ");
   w = w.replace(/E2\s*$/, "E0 ");
