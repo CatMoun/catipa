@@ -86,3 +86,5 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
   - português europeu adicionado
   - G2P Palavra descontinuado
   - todos os arquivos foram melhorados
+- v3.0.1 (08-07-2026)
+  - atualização de léxico e regras
