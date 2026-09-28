@@ -8,6 +8,20 @@
 const LEXICON_PE = {
 	"a": "ac2",
 	"à": "a2",
+	"aeroportos": "ac2 ee2 r u2 p oo1 r t u2 x",
+	"alfinete": "a2 L f i2 n e1 t ec0",
+	"algema": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "a2 L j e1 m ac2" },
+	      { type: "verbo", ipa: "a2 L j ee1 m ac2" }
+      ]
+	},
+	"anedota": "ac2 n ec0 d oo1 t ac2",
+	"anedotas": "ac2 n ec0 d oo1 t ac2 x",
+	"aproximar": "ac2 p r oo2 s i2 m a1 r",
+	"argola": "ac2 r g oo1 l ac2",
+	"argolas": "ac2 r g oo1 l ac2 x",
 	"às": "a2 x",
 	"aberta": "ac2 b ee1 r t ac2",
 	"abertas": "ac2 b ee1 r t ac2 x",
@@ -126,10 +140,18 @@ const LEXICON_PE = {
 	"aquilo": "ac2 k i1 l u0",
 	"arroz": "ac2 H o1 x",
 	"as": "ac2 x",
+	"assembleia": "ac2 s E2 b l ac1 y ac2",
+	"assembleias": "ac2 s E2 b l ac1 y ac2 x",
+	"atleta": "ac2 t l ee1 t ac2",
+	"atletas": "ac2 t l ee1 t ac2 x",
 	"autocarro": "a2 W t oo2 k a1 H u0",
 	"autocarros": "a2 W t oo2 k a1 H u2 x",
+	"auxiliar": "a2 W s i2 l i2 a1 r",
 	"auxílio": "a2 W s i1 l y u0",
 	"auxílios": "a2 W s i1 l y u2 x",
+	"axila": "ac2 k s i1 l ac2",
+	"axilas": "ac2 k s i1 l ac2 x",
+	"banquete": "b A2 k e1 t ec0",
 	"bebe": "b ee1 b ec0",
 	"bebem": "b ee1 b A2 Y",
 	"bebo": "b e1 b u0",
@@ -137,32 +159,55 @@ const LEXICON_PE = {
 	"belas": "b ee1 l ac2 x",
 	"belo": "b ee1 l u0",
 	"belos": "b ee1 l u2 x",
+	"bilíngue": "b i2 l I1 g w ec0",
+	"bilíngues": "b i2 l I1 g w ec0 x",
+	"bloco": "b l oo1 k u0",
+	"blocos": "b l oo1 k u2 x",
 	"boca": "b o1 k ac2",
 	"bocas": "b o1 k ac2 x",
+	"boia": "b oo1 y ac2",
+	"boias": "b oo1 y ac2 x",
 	"bola": "b oo1 l ac2",
 	"bolas": "b oo1 l ac2 x",
+	"bolinha": "b oo2 l i1 nh ac2",
+	"bolinhas": "b oo2 l i1 nh ac2 x",
 	"bolsa": "b o1 L s ac2",
 	"bolsas": "b o1 L s ac2 x",
 	"bolso": "b o1 L s u0",
 	"bolsos": "b o1 L s u2 x",
+	"borda": "b oo1 r d ac2",
+	"bordas": "b oo1 r d ac2 x",
 	"bosque": "b oo1 x k ec0",
 	"bosques": "b oo1 x k ec0 x",
 	"bota": "b oo1 t ac2",
 	"botas": "b oo1 t ac2 x",
+	"boxe": "b oo1 k s ec0",
 	"cabeça": "k ac2 b e1 s ac2",
 	"cabeças": "k ac2 b e1 s ac2 x",
 	"cabelo": "k ac2 b e1 l u0",
 	"cabelos": "k ac2 b e1 l u2 x",
+	"cadela": "k ac2 d ee1 l ac2",
+	"cadelas": "k ac2 d ee1 l ac2 x",
+	"cafezinho": "k ac2 f ee2 z i1 nh u0",
+	"cafezinhos": "k ac2 f ee2 z i1 nh u2 x",
+	"camisola": "k ac2 m i2 z oo1 l ac2",
+	"camisolas": "k ac2 m i2 z oo1 l ac2 x",
 	"caneta": "k ac2 n e1 t ac2",
 	"canetas": "k ac2 n e1 t ac2 x",
+	"capela": "k ac2 p ee1 l ac2",
+	"capelas": "k ac2 p ee1 l ac2 x",
 	"caroço": "k ac2 r o1 s u0",
 	"caroços": "k ac2 r oo1 s u2 x",
 	"castelo": "k ac2 x t ee1 l u0",
 	"castelos": "k ac2 x t ee1 l u2 x",
 	"catorze": "k ac2 t o1 r z ec0",
+	"cautela": "k ac2 W t ee1 l ac2",
+	"cautelas": "k ac2 W t ee1 l ac2 x",
 	"cebola": "s ec0 b o1 l ac2",
 	"cebolas": "s ec0 b o1 l ac2 x",
 	"cedo": "s e1 d u0",
+	"cego": "s ee1 g u0",
+	"cegos": "s ee1 g u2 x",
 	"cerca": {
 	  default : "substantivo",
 	  entries : [
@@ -171,6 +216,7 @@ const LEXICON_PE = {
       ]
 	},
 	"certa": "s ee1 r t ac2",
+	"certamente": "s ee2 r t ac2 m E1 t ec0",
 	"certas": "s ee1 r t ac2 x",
 	"certo": "s ee1 r t u0",
 	"certos": "s ee1 r t u2 x",
@@ -179,6 +225,8 @@ const LEXICON_PE = {
 	"chego": "x e1 g u0",
 	"chinelo": "x i2 n ee1 l u0",
 	"chinelos": "x i2 n ee1 l u2 x",
+	"choque": "x oo1 k ec0",
+	"choques": "x oo1 k ec0 x",
 	"choro": {
 	  default : "substantivo",
 	  entries : [
@@ -186,6 +234,8 @@ const LEXICON_PE = {
           { type: "verbo", ipa: "x oo1 r u0" }
       ]
 	},
+	"cinquenta": "s I2 k w E1 t ac2",
+	"cobre": "k oo1 b r ec0",
 	"coco": "k o1 k u0",
 	"cocos": "k o1 k u2 x",
 	"colher": {
@@ -196,6 +246,8 @@ const LEXICON_PE = {
       ]
 	},
 	"colheres": "k u2 lh ee1 r ec0 x",
+	"colmeia": "k u2 L m ac1 y ac2",
+	"colmeias": "k u2 L m ac1 y ac2 x",
 	"colo": {
 	  default : "substantivo",
 	  entries : [
@@ -216,12 +268,25 @@ const LEXICON_PE = {
       ]
 	},
 	"como": "k o1 m u0",
+	"completa": "k O2 p l ee1 t ac2",
+	"completas": "k O2 p l ee1 t ac2 x",
 	"complexa": "k O2 p l ee1 k s ac2",
 	"complexo": "k O2 p l ee1 k s u0",
 	"complexos": "k O2 p l ee1 k s u2 x",
+	"concreta": "k O2 k r ee1 t ac2",
+	"concretas": "k O2 k r ee1 t ac2 x",
+	"conforto": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "k O2 f o1 r t u0" },
+	      { type: "verbo", ipa: "k O2 f oo1 r t u0" }
+      ]
+	},
 	"conhece": "k u2 nh ee1 s ec0",
 	"conhecem": "k u2 nh ee1 s A2 Y",
 	"conheço": "k u2 nh e1 s u0",
+	"consequência": "k O2 s ec0 k w E1 s y ac2",
+	"consequências": "k O2 s ec0 k w E1 s y ac2 x",
 	"conserto": {
 	  default : "substantivo",
 	  entries : [
@@ -238,14 +303,20 @@ const LEXICON_PE = {
 	},
 	"contexto": "k O2 t ac1 Y x t u0",
 	"contextos": "k O2 t ac1 Y x t u2 x",
+	"copa": "k oo1 p ac2",
+	"copas": "k oo1 p ac2 x",
 	"copo": "k oo1 p u0",
 	"copos": "k oo1 p u2 x",
 	"cor": "k o1 r",
+	"corda": "k oo1 r d ac2",
+	"cordas": "k oo1 r d ac2 x",
 	"cores": "k o1 r ec0 x",
 	"corpo": "k o1 r p u0",
 	"corpos": "k oo1 r p u2 x",
 	"corre": "k oo1 H ec0",
 	"correm": "k oo1 H A2 Y",
+	"correta": "k u2 H ee1 t ac2",
+	"corretas": "k u2 H ee1 t ac2 x",
 	"corro": "k oo1 H u0",
 	"corta": "k oo1 r t ac2",
 	"cortam": "k oo1 r t A2 W",
@@ -257,17 +328,39 @@ const LEXICON_PE = {
       ]
 	},
 	"corto": "k oo1 r t u0",
+	"costa": "k oo1 x t ac2",
+	"costela": "k u2 x t ee1 l ac2",
+	"costelas": "k u2 x t ee1 l ac2 x",
+	"cota": "k oo1 t ac2",
+	"cotas": "k oo1 t ac2 x",
 	"cotovelo": "k u2 t u2 v e1 l u0",
 	"cotovelos": "k u2 t u2 v e1 l u2 x",
+	"cova": "k oo1 v ac2",
+	"covas": "k oo1 v ac2 x",
+	"credo": "k r ee1 d u0",
+	"credos": "k r ee1 d u2 x",
+	"creem": "k r e1 A2 Y",
 	"da": "d ac2",
 	"das": "d ac2 x",
 	"de": "d ec0",
 	"dedo": "d e1 d u0",
 	"dedos": "d e1 d u2 x",
+	"deem": "d e1 A2 Y",
 	"dela": "d ee1 l ac2",
 	"delas": "d ee1 l ac2 x",
 	"dele": "d e1 l ec0",
 	"deles": "d e1 l ec0 x",
+	"delinquente": "d ec0 l I2 k w E1 t ec0",
+	"delinquentes": "d ec0 l I2 k w E1 t ec0 x",
+	"derrota": "d ec0 H oo1 t ac2",
+	"derrotas": "d ec0 H oo1 t ac2 x",
+	"desespero": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "d ec0 z ec0 x p e1 r u0" },
+	      { type: "verbo", ipa: "d ec0 z ec0 x p ee1 r u0" }
+      ]
+	},
 	"dessa": "d ee1 s ac2",
 	"dessas": "d ee1 s ac2 x",
 	"desse": "d e1 s ec0",
@@ -277,6 +370,13 @@ const LEXICON_PE = {
 	"deste": "d e1 x t ec0",
 	"destes": "d e1 x t ec0 x",
 	"dez": "d ee1 x",
+	"diarreia": "d i2 ac2 H ac1 y ac2",
+	"dieta": "d i2 ee1 t ac2",
+	"dietas": "d i2 ee1 t ac2 x",
+	"direta": "d i2 r ee1 t ac2",
+	"diretas": "d i2 r ee1 t ac2 x",
+	"discreta": "d i2 x k r ee1 t ac2",
+	"discretas": "d i2 x k r ee1 t ac2 x",
 	"do": "d u2",
 	"dor": "d o1 r",
 	"dores": "d o1 r ec0 x",
@@ -288,8 +388,28 @@ const LEXICON_PE = {
 	"doutoras": "d o2 t o1 r ac2 x",
 	"doutores": "d o2 t o1 r ec0 x",
 	"doze": "d o1 z ec0",
+	"duelo": "d u2 ee1 l u0",
+	"duelos": "d u2 ee1 l u2 x",
 	"e": "i2",
 	"é": "ee1",
+	"eloquente": "i2 l u2 k w E1 t ec0",
+	"eloquentes": "i2 l u2 k w E1 t ec0 x",
+	"encosta": "E2 k oo1 x t ac2",
+	"encostas": "E2 k oo1 x t ac2 x",
+	"endereço": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "E2 d ec0 r e1 s u0" },
+	      { type: "verbo", ipa: "E2 d ec0 r ee1 s u0" }
+      ]
+	},
+	"enterro": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "E2 t e1 H u0" },
+	      { type: "verbo", ipa: "E2 t ee1 H u0" }
+      ]
+	},
 	"és": "ee1 x",
 	"ela": "ee1 l ac2",
 	"elas": "ee1 l ac2 x",
@@ -346,6 +466,20 @@ const LEXICON_PE = {
       ]
 	},
 	"esforços": "ec0 x f oo1 r s u2 x",
+	"espelho": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "ec0 x p ac1 lh u0" },
+	      { type: "verbo", ipa: "ec0 x p ee1 lh u0" }
+      ]
+	},
+	"espeto": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "ec0 x p e1 t u0" },
+	      { type: "verbo", ipa: "ec0 x p ee1 t u0" }
+      ]
+	},
 	"esposa": "ec0 x p o1 z ac2",
 	"esposas": "ec0 x p o1 z ac2 x",
 	"esquece": "ec0 x k ee1 s ec0",
@@ -360,7 +494,15 @@ const LEXICON_PE = {
 	"este": "e1 x t ec0",
 	"estes": "e1 x t ec0 x",
 	"esteve": "ec0 x t e1 v ec0",
+	"estoico": "ec0 x t oo1 Y k u0",
+	"estoicos": "ec0 x t oo1 Y k u2 x",
+	"estoque": "ec0 x t oo1 k ec0",
+	"estoques": "ec0 x t oo1 k ec0 x",
+	"estreia": "ec0 x t r ac1 y ac2",
+	"estreias": "ec0 x t r ac1 y ac2 x",
 	"eu": "e1 W",
+	"europeia": "e2 W r u2 p ac1 y ac2",
+	"europeias": "e2 W r u2 p ac1 y ac2 x",
 	"exagero": {
 	  default : "substantivo",
 	  entries : [
@@ -385,11 +527,17 @@ const LEXICON_PE = {
 	"existe": "i2 z i1 x t ec0",
 	"existem": "i2 z i1 x t A2 Y",
 	"existir": "i2 z i2 x t i1 r",
+	"farelo": "f ac2 r ee1 l u0",
+	"farelos": "f ac2 r ee1 l u2 x",
+	"favela": "f ac2 v ee1 l ac2",
+	"favelas": "f ac2 v ee1 l ac2 x",
 	"fera": "f ee1 r ac2",
 	"feras": "f ee1 r ac2 x",
 	"ferro": "f ee1 H u0",
 	"festa": "f ee1 x t ac2",
 	"festas": "f ee1 x t ac2 x",
+	"festinha": "f ee2 x t i1 nh ac2",
+	"festinhas": "f ee2 x t i1 nh ac2 x",
 	"fixa": "f i1 k s ac2",
 	"fixas": "f i1 k s ac2 x",
 	"fixe": "f i1 x ec0",
@@ -410,6 +558,7 @@ const LEXICON_PE = {
 	"forças": "f o1 r s ac2 x",
 	"forma": "f oo1 r m ac2",
 	"formas": "f oo1 r m ac2 x",
+	"fornos": "f oo1 r n u2 x",
 	"forro": {
 	  default : "substantivo",
 	  entries : [
@@ -419,7 +568,18 @@ const LEXICON_PE = {
 	},
 	"forte": "f oo1 r t ec0",
 	"fortes": "f oo1 r t ec0 x",
+	"frequência": "f r ec0 k w E1 s y ac2",
+	"frequências": "f r ec0 k w E1 s y ac2 x",
+	"frequente": "f r ec0 k w E1 t ec0",
+	"frequentes": "f r ec0 k w E1 t ec0 x",
+	"frota": "f r oo1 t ac2",
+	"frotas": "f r oo1 t ac2 x",
 	"futebol": "f u2 t ec0 b oo1 L",
+	"gabinete": "g ac2 b i2 n e1 t ec0",
+	"gaiola": "g ac2 y oo1 l ac2",
+	"gaiolas": "g ac2 y oo1 l ac2 x",
+	"geleia": "j ec0 l ac1 y ac2",
+	"geleias": "j ec0 l ac1 y ac2 x",
 	"gelo": {
 	  default : "substantivo",
 	  entries : [
@@ -427,8 +587,12 @@ const LEXICON_PE = {
           { type: "verbo", ipa: "j ee1 l u0" }
       ]
 	},
+	"gesto": "j ee1 x t u0",
+	"gestos": "j ee1 x t u2 x",
 	"globo": "g l o1 b u0",
 	"globos": "g l o1 b u2 x",
+	"gola": "g oo1 l ac2",
+	"golas": "g oo1 l ac2 x",
 	"gorda": "g o1 r d ac2",
 	"gordas": "g o1 r d ac2 x",
 	"gordo": "g o1 r d u0",
@@ -452,8 +616,13 @@ const LEXICON_PE = {
 	},
 	"gota": "g o1 t ac2",
 	"gotas": "g o1 t ac2 x",
+	"grossa": "g r oo1 s ac2",
+	"grossas": "g r oo1 s ac2 x",
+	"grossos": "g r oo1 s u2 x",
 	"guerra": "g ee1 H ac2",
 	"guerras": "g ee1 H ac2 x",
+	"heroico": "i2 r oo1 Y k u0",
+	"heroicos": "i2 r oo1 Y k u2 x",
 	"homem": "oo1 m A2 Y",
 	"homens": "oo1 m A2 Y x",
 	"hora": "oo1 r ac2",
@@ -469,11 +638,14 @@ const LEXICON_PE = {
 	"imposto": "I2 p o1 x t u0",
 	"impostos": "I2 p oo1 x t u2 x",
 	"internet": "I2 t ec0 r n ee1 t ec0",
+	"intoxicar": "I2 t oo2 k s i2 k a1 r",
 	"inverno": "I2 v ee1 r n u0",
 	"isso": "i1 s u0",
 	"isto": "i1 x t u0",
 	"janela": "j ac2 n ee1 l ac2",
 	"janelas": "j ac2 n ee1 l ac2 x",
+	"jiboia": "j i2 b oo1 y ac2",
+	"jiboias": "j i2 b oo1 y ac2 x",
 	"joga": "j oo1 g ac2",
 	"jogam": "j oo1 g A2 W",
 	"jogo": {
@@ -484,13 +656,22 @@ const LEXICON_PE = {
       ]
 	},
 	"jogos": "j oo1 g u2 x",
+	"leem": "l e1 A2 Y",
+	"lembrete": "l E2 b r e1 t ec0",
 	"leva": "l ee1 v ac2",
 	"levas": "l ee1 v ac2 x",
 	"levam": "l ee1 v A2 W",
+	"léxico": "l ee1 k s i2 k u0",
+	"léxicos": "l ee1 k s i2 k u2 x",
 	"lhe": "lh ec0",
 	"lhes": "lh ec0 x",
 	"língua": "l I1 g w ac2",
 	"línguas": "l I1 g w ac2 x",
+	"linguiça": "l I2 g w i1 s ac2",
+	"linguiças": "l I2 g w i1 s ac2 x",
+	"linguista": "l I2 g w i1 x t ac2",
+	"linguistas": "l I2 g w i1 x t ac2 x",
+	"linguística": "l I2 g w i1 x t i2 k ac2",
 	"lobo": "l o1 b u0",
 	"lobos": "l o1 b u2 x",
 	"loja": "l oo1 j ac2",
@@ -499,6 +680,8 @@ const LEXICON_PE = {
 	"maiores": "m ac2 y oo1 r ec0 x",
 	"mais": "m a1 Y x",
 	"mas": "m ac2 x",
+	"máxima": "m a1 s i2 m ac2",
+	"máximas": "m a1 s i2 m ac2 x",
 	"máximo": "m a1 s i2 m u0",
 	"me": "m ec0",
 	"medo": "m e1 d u0",
@@ -512,6 +695,8 @@ const LEXICON_PE = {
 	"mereço": "m ec0 r e1 s u0",
 	"mesa": "m e1 z ac2",
 	"mesas": "m e1 z ac2 x",
+	"meta": "m ee1 t ac2",
+	"metas": "m ee1 t ac2 x",
 	"metro": "m ee1 t r u0",
 	"metros": "m ee1 t r u2 x",
 	"miolo": "m i2 o1 l u0",
@@ -520,6 +705,8 @@ const LEXICON_PE = {
 	"modas": "m oo1 d ac2 x",
 	"modelo": "m u2 d ee1 l u0",
 	"modelos": "m u2 d ee1 l u2 x",
+	"mola": "m oo1 l ac2",
+	"molas": "m oo1 l ac2 x",
 	"molho": {
 	  default : "substantivo",
 	  entries : [
@@ -573,6 +760,8 @@ const LEXICON_PE = {
 	"netas": "n ee1 t ac2 x",
 	"neto": "n ee1 t u0",
 	"netos": "n ee1 t u2 x",
+	"nexo": "n ee1 k s u0",
+	"nexos": "n ee1 k s u2 x",
 	"no": "n u2",
 	"norte": "n oo1 r t ec0",
 	"nos": "n u2 x",
@@ -584,6 +773,7 @@ const LEXICON_PE = {
 	"nota": "n oo1 t ac2",
 	"notas": "n oo1 t ac2 x",
 	"nova": "n oo1 v ac2",
+	"novamente": "n oo2 v ac2 m E1 t ec0",
 	"novas": "n oo1 v ac2 x",
 	"nove": "n oo1 v ec0",
 	"novela": "n u2 v ee1 l ac2",
@@ -613,19 +803,52 @@ const LEXICON_PE = {
 	"ou": "o2",
 	"ovo": "o1 v u0",
 	"ovos": "oo1 v u2 x",
+	"oxigénio": "oo2 k s i2 j ee1 n y u0",
+	"oxítona": "oo2 k s i1 t u2 n ac2",
+	"oxítonas": "oo2 k s i1 t u2 n ac2 x",
 	"panela": "p ac2 n ee1 l ac2",
 	"panelas": "p ac2 n ee1 l ac2 x",
-	"para": "p ac2 r ac2",
+	"para": {
+	  default : "preposição",
+	  entries : [
+	      { type: "preposição", ipa: "p ac2 r ac2" },
+	      { type: "verbo", ipa: "p a1 r ac2" }
+      ]
+	},
+	"paradoxo": "p ac2 r ac2 d oo1 k s u0",
+	"paradoxos": "p ac2 r ac2 d oo1 k s u2 x",
+	"paranoia": "p ac2 r ac2 n oo1 y ac2",
+	"paranoias": "p ac2 r ac2 n oo1 y ac2 x",
+	"parcela": "p ac2 r s ee1 l ac2",
+	"parcelas": "p ac2 r s ee1 l ac2 x",
 	"parece": "p ac2 r ee1 s ec0",
 	"parecem": "p ac2 r ee1 s A2 Y",
 	"pareço": "p ac2 r e1 s u0",
+	"paroxítona": "p ac2 r oo2 k s i1 t u2 n ac2",
+	"paroxítonas": "p ac2 r oo2 k s i1 t u2 n ac2 x",
+	"passarela": "p ac2 s ac2 r ee1 l ac2",
+	"passarelas": "p ac2 s ac2 r ee1 l ac2 x",
+	"patriota": "p ac2 t r i2 oo1 t ac2",
+	"patriotas": "p ac2 t r i2 oo1 t ac2 x",
 	"peça": "p ee1 s ac2",
 	"peças": "p ee1 s ac2 x",
 	"pedra": "p ee1 d r ac2",
 	"pedras": "p ee1 d r ac2 x",
-	"pela": "p ec0 l ac2",
+	"pela": {
+	  default : "preposição",
+	  entries : [
+	      { type: "preposição", ipa: "p ec0 l ac2" },
+	      { type: "verbo", ipa: "p ee1 l ac2" }
+      ]
+	},
 	"pelas": "p ec0 l ac2 x",
-	"pelo": "p ec0 l u0",
+	"pelo": {
+	  default : "preposição",
+	  entries : [
+	      { type: "preposição", ipa: "p ec0 l u0" },
+	      { type: "substantivo", ipa: "p e1 l u0" }
+      ]
+	},
 	"pelos": "p ec0 l u2 x",
 	"pera": "p e1 r ac2",
 	"peras": "p e1 r ac2 x",
@@ -641,10 +864,17 @@ const LEXICON_PE = {
 	},
 	"pessoa": "p ec0 s o1 ac2",
 	"pessoas": "p ec0 s o1 ac2 x",
+	"pezinho": "p ee2 z i1 nh u0",
+	"pezinhos": "p ee2 z i1 nh u2 x",
+	"pinguim": "p I2 g w I1",
 	"pior": "p i2 oo1 r",
 	"piores": "p i2 oo1 r ec0 x",
+	"pistola": "p i2 x t oo1 l ac2",
+	"pistolas": "p i2 x t oo1 l ac2 x",
 	"pizza": "p i1 t s ac2",
 	"pizzas": "p i1 t s ac2 x",
+	"plateia": "p l ac2 t ac1 y ac2",
+	"plateias": "p l ac2 t ac1 y ac2 x",
 	"pobre": "p oo1 b r ec0",
 	"pobres": "p oo1 b r ec0 x",
 	"poço": "p o1 s u0",
@@ -652,6 +882,10 @@ const LEXICON_PE = {
 	"pode": "p oo1 d ec0",
 	"pôde": "p o1 d ec0",
 	"podem": "p oo1 d A2 Y",
+	"poeta": "p u2 ee1 t ac2",
+	"poetas": "p u2 ee1 t ac2 x",
+	"polo": "p oo1 l u0",
+	"polos": "p oo1 l u2 x",
 	"por": "p u2 r",
 	"porca": "p oo1 r k ac2",
 	"porcas": "p oo1 r k ac2 x",
@@ -664,6 +898,8 @@ const LEXICON_PE = {
 	"porto": "p o1 r t u0",
 	"portos": "p oo1 r t u2 x",
 	"posso": "p oo1 s u0",
+	"posta": "p oo1 x t ac2",
+	"postas": "p oo1 x t ac2 x",
 	"posto": "p o1 x t u0",
 	"postos": "p oo1 x t u2 x",
 	"povo": "p o1 v u0",
@@ -676,21 +912,33 @@ const LEXICON_PE = {
           { type: "fazer sermão", ipa: "p r ee2 g a1 r" }
       ]
 	},
+	"prego": "p r ee1 g u0",
+	"pregos": "p r ee1 g u2 x",
 	"professor": "p r u2 f ec0 s o1 r",
 	"professora": "p r u2 f ec0 s o1 r ac2",
 	"professoras": "p r u2 f ec0 s o1 r ac2 x",
 	"professores": "p r u2 f ec0 s o1 r ec0 x",
+	"profeta": "p r u2 f ee1 t ac2",
+	"profetas": "p r u2 f ee1 t ac2 x",
+	"proparoxítona": "p r oo2 p ac2 r oo2 k s i1 t u2 n ac2",
+	"proparoxítonas": "p r oo2 p ac2 r oo2 k s i1 t u2 n ac2 x",
 	"prova": "p r oo1 v ac2",
 	"provas": "p r oo1 v ac2 x",
 	"próxima": "p r oo1 s i2 m ac2",
+	"proximidade": "p r oo2 s i2 m i2 d a1 d ec0",
 	"próximo": "p r oo1 s i2 m u0",
 	"que": "k ec0",
+	"queda": "k ee1 d ac2",
+	"quedas": "k ee1 d ac2 x",
 	"quer": "k ee1 r",
 	"querem": "k ee1 r A2 Y",
 	"queres": "k ee1 r ec0 x",
 	"quero": "k ee1 r u0",
+	"quieta": "k i2 ee1 t ac2",
+	"quietas": "k i2 ee1 t ac2 x",
 	"real": "H e2 a1 L",
 	"reais": "H e2 a1 Y x",
+	"redor": "H ec0 d oo1 r",
 	"reflexo": "H ec0 f l ee1 k s u0",
 	"reflexos": "H ec0 f l ee1 k s u2 x",
 	"reforço": {
@@ -700,7 +948,21 @@ const LEXICON_PE = {
           { type: "verbo", ipa: "H ec0 f oo1 r s u0" }
       ]
 	},
+	"reforços": "H ec0 f oo1 r s u2 x",
+	"regra": "H ee1 g r ac2",
+	"regras": "H ee1 g r ac2 x",
 	"resta": "H ee1 x t ac2",
+	"resto": "H ee1 x t u0",
+	"restos": "H ee1 x t u2 x",
+	"reta": "H ee1 t ac2",
+	"retas": "H ee1 t ac2 x",
+	"retorno": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "H ec0 t o1 r n u0" },
+	      { type: "verbo", ipa: "H ec0 t oo1 r n u0" }
+      ]
+	},
 	"roda": "H oo1 d ac2",
 	"rodas": "H oo1 d ac2 x",
 	"rolo": {
@@ -712,8 +974,11 @@ const LEXICON_PE = {
 	},
 	"rosto": "H o1 x t u0",
 	"rostos": "H o1 x t u2 x",
+	"rota": "H oo1 t ac2",
+	"rotas": "H oo1 t ac2 x",
 	"roxa": "H o1 x ac2",
 	"roxo": "H o1 x u0",
+	"sabonete": "s ac2 b u2 n e1 t ec0",
 	"se": "s ec0",
 	"seca": {
 	  default : "substantivo",
@@ -729,6 +994,8 @@ const LEXICON_PE = {
           { type: "verbo", ipa: "s ee1 k u0" }
       ]
 	},
+	"secreta": "s ec0 k r ee1 t ac2",
+	"secretas": "s ec0 k r ee1 t ac2 x",
 	"sede": {
 	  default : "sensação",
 	  entries : [
@@ -749,12 +1016,25 @@ const LEXICON_PE = {
 	"senhora": "s ec0 nh oo1 r ac2",
 	"senhoras": "s ec0 nh oo1 r ac2 x",
 	"senhores": "s ec0 nh o1 r ec0 x",
+	"sequência": "s ec0 k w E1 s y ac2",
+	"sequências": "s ec0 k w E1 s y ac2 x",
+	"sequestro": "s ec0 k w ee1 x t r u0",
+	"sequestros": "s ec0 k w ee1 x t r u2 x",
+	"seta": "s ee1 t ac2",
+	"setas": "s ee1 t ac2 x",
 	"sete": "s ee1 t ec0",
 	"sexta": "s ac1 Y x t ac2",
 	"sextas": "s ac1 Y x t ac2 x",
 	"sintaxe": "s I2 t a1 s ec0",
 	"site": "s a1 Y t ec0",
 	"sites": "s a1 Y t ec0 x",
+	"sobre": {
+	  default : "preposição",
+	  entries : [
+	      { type: "preposição", ipa: "s o1 b r ec0" },
+	      { type: "verbo", ipa: "s oo1 b r ec0" }
+      ]
+	},
 	"soco": {
 	  default : "substantivo",
 	  entries : [
@@ -762,10 +1042,16 @@ const LEXICON_PE = {
           { type: "verbo", ipa: "s oo1 k u0" }
       ]
 	},
+	"socorros": "s u2 k oo1 H u2 x",
 	"sogra": "s oo1 g r ac2",
 	"sogras": "s oo1 g r ac2 x",
 	"sogro": "s o1 g r u0",
 	"sogros": "s oo1 g r u2 x",
+	"sola": "s oo1 l ac2",
+	"solas": "s oo1 l ac2 x",
+	"solo": "s oo1 l u0",
+	"solos": "s oo1 l u2 x",
+	"somente": "s oo2 m E1 t ec0",
 	"sopa": "s oo1 p ac2",
 	"sopas": "s oo1 p ac2 x",
 	"sopro": {
@@ -776,6 +1062,18 @@ const LEXICON_PE = {
       ]
 	},
 	"sorte": "s oo1 r t ec0",
+	"sossego": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "s u2 s e1 g u0" },
+	      { type: "verbo", ipa: "s u2 s ee1 g u0" }
+      ]
+	},
+	"sozinha": "s oo2 z i1 nh ac2",
+	"sozinhas": "s oo2 z i1 nh ac2 x",
+	"sozinho": "s oo2 z i1 nh u0",
+	"sozinhos": "s oo2 z i1 nh u2 x",
+	"suor": "s u2 oo1 r",
 	"suporte": {
 	  default : "substantivo",
 	  entries : [
@@ -783,8 +1081,12 @@ const LEXICON_PE = {
           { type: "verbo", ipa: "s u2 p oo1 r t ec0" }
       ]
 	},
+	"tabela": "t ac2 b ee1 l ac2",
+	"tabelas": "t ac2 b ee1 l ac2 x",
 	"táxi": "t a1 k s i2",
 	"táxis": "t a1 k s i2 x",
+	"taxista": "t ac2 k s i1 x t ac2",
+	"taxistas": "t ac2 k s i1 x t ac2 x",
 	"te": "t ec0",
 	"teatro": "t e2 a1 t r u0",
 	"teatros": "t e2 a1 t r u2 x",
@@ -792,6 +1094,13 @@ const LEXICON_PE = {
 	"telas": "t ee1 l ac2 x",
 	"telemóvel": "t ec0 l ec0 m oo1 v ec0 L",
 	"telemóveis": "t ec0 l ec0 m oo1 v ac2 Y x",
+	"tempero": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "t E2 p e1 r u0" },
+	      { type: "verbo", ipa: "t E2 p ee1 r u0" }
+      ]
+	},
 	"terça": "t ee1 r s ac2",
 	"testa": "t ee1 x t ac2",
 	"testas": "t ee1 x t ac2 x",
@@ -800,6 +1109,8 @@ const LEXICON_PE = {
 	"teve": "t e1 v ec0",
 	"texto": "t ac1 Y x t u0",
 	"textos": "t ac1 Y x t u2 x",
+	"tigela": "t i2 j ee1 l ac2",
+	"tigelas": "t i2 j ee1 l ac2 x",
 	"tijolo": "t i2 j o1 l u0",
 	"tijolos": "t i2 j oo1 l u2 x",
 	"toco": {
@@ -809,15 +1120,30 @@ const LEXICON_PE = {
           { type: "verbo", ipa: "t oo1 k u0" }
       ]
 	},
+	"toque": "t oo1 k ec0",
+	"toques": "t oo1 k ec0 x",
 	"torta": "t oo1 r t ac2",
 	"tortas": "t oo1 r t ac2 x",
+	"tortos": "t oo1 r t u2 x",
 	"tóxico": "t oo1 k s i2 k u0",
 	"tóxicos": "t oo1 k s i2 k u2 x",
+	"tranquila": "t r A2 k w i1 l ac2",
+	"tranquilas": "t r A2 k w i1 l ac2 x",
+	"tranquilidade": "t r A2 k w i2 l i2 d a1 d ec0",
+	"tranquilo": "t r A2 k w i1 l u0",
+	"tranquilos": "t r A2 k w i1 l u2 x",
 	"transporte": {
 	  default : "substantivo",
 	  entries : [
 	      { type: "substantivo", ipa: "t r A2 x p o1 r t ec0" },
           { type: "verbo", ipa: "t r A2 x p oo1 r t ec0" }
+      ]
+	},
+	"transtorno": {
+	  default : "substantivo",
+	  entries : [
+	      { type: "substantivo", ipa: "t r A2 x t o1 r n u0" },
+	      { type: "verbo", ipa: "t r A2 x t oo1 r n u0" }
       ]
 	},
 	"treze": "t r e1 z ec0",
@@ -834,6 +1160,7 @@ const LEXICON_PE = {
 	"uma": "u2 m ac2",
 	"umas": "u2 m ac2 x",
 	"uns": "U2 x",
+	"veem": "v e1 A2 Y",
 	"vela": "v ee1 l ac2",
 	"velas": "v ee1 l ac2 x",
 	"velha": "v ee1 lh ac2",
@@ -842,6 +1169,8 @@ const LEXICON_PE = {
 	"velhos": "v ee1 lh u2 x",
 	"verde": "v e1 r d ec0",
 	"verdes": "v e1 r d ec0 x",
+	"viola": "v i2 oo1 l ac2",
+	"violas": "v i2 oo1 l ac2 x",
 	"você": "v u2 s e1",
 	"vocês": "v u2 s e1 x",
 	"volta": "v oo1 L t ac2",
