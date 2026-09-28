@@ -88,3 +88,5 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
   - todos os arquivos foram melhorados
 - v3.0.1 (08-07-2026)
   - atualização de léxico e regras
+- v3.0.2 (28-09-2026)
+  - atualização de léxico e regras
