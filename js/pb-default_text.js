@@ -34,9 +34,10 @@ function isVoicedConsonant(token) {
   return /^(b|d|dj|g|v|z|j|m|n|l|lh|nh|r|y|w)$/.test(token);
 }
 
-function classifyJunction(curr, next) {
+function classifyJunction(curr, next, word, nextWord) {
   const last  = curr[curr.length - 1];
   const first = next[0];
+  const fromL = !!word && /l$/.test(word);
 
   if (!isVowelToken(first)) {
     if (last === 's' && isVoicedConsonant(first)) return { action: 'set', token: 'z' };
@@ -49,90 +50,132 @@ function classifyJunction(curr, next) {
   if (last === 'h') return { action: 'set', token: 'r' };
 
   if (last === 'W') {
-    return nextQ === 'u' ? { action: 'pop' } : { action: 'set', token: 'w' };
+    return (nextQ === 'u' && !fromL) ? { action: 'pop' } : { action: 'set', token: 'w' };
   }
   if (last === 'Y') {
     return nextQ === 'i' ? { action: 'pop' } : { action: 'set', token: 'y' };
   }
 
+  if (fromL && /^[uU]/.test(last)) return { action: 'push', token: 'w' };
+
+  const lastQ = getVowelQuality(last);
   const prev = curr.length > 1 ? curr[curr.length - 2] : null;
-  if (prev === 'y' || prev === 'w' || prev === 'Y' || prev === 'W') return { action: 'none' };
+  if (prev === 'y' || prev === 'w' || prev === 'Y' || prev === 'W') {
+    if (/0$/.test(last) && lastQ === nextQ) return { action: 'pop' };
+    return { action: 'none' };
+  }
+
+  if (last === 'i0' && (prev === 'tch' || prev === 'dj')) return { action: 'pop' };
+
+  let act = { action: 'none' };
 
   if (last === 'i0') {
-    if (nextQ === 'i') return { action: 'pop' };
-    return { action: 'choice', options: [
+    act = nextQ === 'i' ? { action: 'pop' } : { action: 'choice', options: [
       { type: 'Reduzir', action: 'set', token: 'y' },
       { type: 'Apagar',  action: 'pop' }
     ]};
-  }
-
-  if (last === 'u0') {
-    if (nextQ === 'u') return { action: 'pop' };
-    return { action: 'choice', options: [
+  } else if (last === 'u0') {
+    act = nextQ === 'u' ? { action: 'pop' } : { action: 'choice', options: [
       { type: 'Reduzir', action: 'set', token: 'w' },
       { type: 'Apagar',  action: 'pop' }
     ]};
-  }
-
-  if (last === 'a0') {
-    if (nextQ === 'a') return { action: 'pop' };
-    return { action: 'choice', options: [
+  } else if (last === 'a0') {
+    act = nextQ === 'a' ? { action: 'pop' } : { action: 'choice', options: [
       { type: 'Manter', action: 'none' },
       { type: 'Apagar', action: 'pop' }
     ]};
   }
 
-  return { action: 'none' };
+  if (act.action === 'choice' && curr.length === 1) {
+    act = act.options.find(o => o.action !== 'pop');
+  }
+  return act;
 }
 
 function applyJunctionAction(curr, act) {
-  if (act.action === 'set')      curr[curr.length - 1] = act.token;
-  else if (act.action === 'pop') curr.pop();
+  if (act.action === 'set')       curr[curr.length - 1] = act.token;
+  else if (act.action === 'pop')  curr.pop();
+  else if (act.action === 'push') curr.push(act.token);
+}
+
+function degeminate(curr, next) {
+  if (!curr.length || !next.length) return;
+  const last = curr[curr.length - 1];
+  if (last === next[0] && !isVowelToken(last)) curr.pop();
+}
+
+function neighborIndex(wt, i, step) {
+  for (let j = i + step; j >= 0 && j < wt.length; j += step) {
+    if (wt[j].length) return j;
+  }
+  return -1;
+}
+
+function sandhiPass(wt, words, decide) {
+  for (let i = wt.length - 2; i >= 0; i--) {
+    const curr = wt[i];
+    if (!curr.length) continue;
+    const j = neighborIndex(wt, i, 1);
+    if (j < 0) continue;
+    const next = wt[j];
+
+    let act = classifyJunction(curr, next, words ? words[i] : null, words ? words[j] : null);
+    if (act.action === 'choice') act = decide(i, act, curr, next, j);
+
+    if (curr.length === 1 && /^[iu]0$/.test(curr[0])) {
+      const p = neighborIndex(wt, i, -1);
+      const prev = p >= 0 ? wt[p] : null;
+      const glides = act.action === 'set' && (act.token === 'y' || act.token === 'w');
+
+      const loneGlide = glides && prev && prev.length === 1 && /^[iu]0$/.test(prev[0]) &&
+                        getVowelQuality(prev[0]) !== getVowelQuality(curr[0]);
+
+      const afterCodaGlide = act.action !== 'pop' && prev && /^[WY]$/.test(prev[prev.length - 1]);
+
+      if (loneGlide || afterCodaGlide) {
+        curr[0] = curr[0].replace('0', '2');
+        continue;
+      }
+    }
+
+    if (curr.length === 2 && /^[iu]0$/.test(curr[0]) && /^[sz]$/.test(curr[1])) {
+      const p = neighborIndex(wt, i, -1);
+      if (p >= 0 && /^[WY]$/.test(wt[p][wt[p].length - 1])) curr[0] = curr[0].replace('0', '2');
+    }
+
+    applyJunctionAction(curr, act);
+    degeminate(curr, next);
+  }
 }
 
 function collectSandhiChoices(catipaWords, words) {
   const wt = catipaWords.map(c => c.trim().split(/\s+/).filter(t => t));
+  const orig = wt.map(t => t.slice());
   const found = [];
 
-  for (let i = 0; i < wt.length - 1; i++) {
-    const curr = wt[i];
-    const next = wt[i + 1];
-    if (!curr.length || !next.length) continue;
-
-    const act = classifyJunction(curr, next);
-    if (act.action !== 'choice') continue;
-
-    const key = words[i] + ' ' + words[i + 1];
-    found.push({
-      key,
+  sandhiPass(wt, words, (i, act, curr, next, j) => {
+    const shown = next.length === 1 ? next : [next[0]].concat(orig[j].slice(1));
+    found.unshift({
+      key: words[i] + ' ' + words[j],
       options: act.options.map(opt => {
         const c = curr.slice();
         applyJunctionAction(c, opt);
-        return { type: opt.type, ipa: c.concat(next).join(' ') };
+        return { type: opt.type, ipa: c.concat(shown).join(' ') };
       })
     });
-  }
+    return act.options[0];
+  });
   return found;
 }
 
 function applySandhi(catipaWords, words, sandhiResolutions) {
   const wt = catipaWords.map(c => c.trim().split(/\s+/).filter(t => t));
 
-  for (let i = 0; i < wt.length - 1; i++) {
-    const curr = wt[i];
-    const next = wt[i + 1];
-    if (!curr.length || !next.length) continue;
-
-    let act = classifyJunction(curr, next);
-
-    if (act.action === 'choice') {
-      const key = words ? words[i] + ' ' + words[i + 1] : null;
-      const chosenType = key && sandhiResolutions ? sandhiResolutions[key] : null;
-      act = act.options.find(o => o.type === chosenType) || act.options[0];
-    }
-
-    applyJunctionAction(curr, act);
-  }
+  sandhiPass(wt, words, (i, act, curr, next, j) => {
+    const key = words ? words[i] + ' ' + words[j] : null;
+    const chosenType = key && sandhiResolutions ? sandhiResolutions[key] : null;
+    return act.options.find(o => o.type === chosenType) || act.options[0];
+  });
 
   return wt.flat().join(' ');
 }
@@ -140,7 +183,11 @@ function applySandhi(catipaWords, words, sandhiResolutions) {
 function g2pTexto(text, outputCallback) {
   if (!text || !text.trim()) return;
 
-  const normalized = text.trim().replace(/[-"'“”‘’]/g, ' ');
+  const normalized = text.trim()
+    .replace(/["'“”‘’]/g, ' ')
+    .replace(/[^\s.,;!?:—…()]+(?:-[^\s.,;!?:—…()]+)+/g,
+      m => LEXICON[m.toLowerCase().normalize("NFC")] ? m : m.replace(/-/g, ' '))
+    .replace(/(^|\s)-+|-+(?=\s|$)/g, ' ');
 
   const allWords = normalized.split(/\s+/).map(w => w.toLowerCase().normalize("NFC").trim()).filter(Boolean);
   const seen = new Set();
