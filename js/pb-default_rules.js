@@ -32,12 +32,14 @@ function detectMorphClass(word) {
   if (/arei$|erei$|irei$/.test(w))           return "verb-open";
   if (/arás$|erás$|irás$/.test(w))           return "verb-open";
   if (/ará$|erá$|irá$/.test(w))              return "verb-open";
-  if (/emos$|imos$/.test(w))                 return "verb-open";
+  if (/imos$/.test(w))                       return "verb-open";
   if (/amos$/.test(w) && !/gramas?$|programas?$/.test(w)) return "verb-open";
   if (/em$/.test(w)   && !/agem$|igem$/.test(w))          return "verb-open";
   if (/am$/.test(w))                         return "verb-open";
 
   if (/eu$/.test(w) && w !== "eu")             return "verb-open";
+
+  if (/ece$|gue$/.test(w))                   return "verb-open";
 
   const NOUN_E = /nte$|bre$|dre$|fre$|tre$|gre$|vre$|ce$|xe$|que$|ge$/;
   if (/[^aeiou]e$/.test(w) && !NOUN_E.test(w)) return "verb-open";
@@ -54,10 +56,14 @@ function applyRules(word) {
   // =========================
 
   w = w.replace(/-/g, "");
-  w = w.replace(/(?<=[aâáãeêéiíoôóuúYW])s(?=[aâáãeêéiíoôóuú])/g, "z");
-  w = w.replace(/([uú])\s*l(?!h)(?![aâáãeêéiíoôóuúwyY])/g, "$1");
+  w = w.replace(/dj/g, "dij");
+  w = w.replace(/(?<=[aâáãeêéiíoôóõuúYW])s(?=[aâáãeêéiíoôóõuú])/g, "z");
+  w = w.replace(/(?<=tr[aâ]n)s(?=[aâáãeêéiíoôóõuú])/g, "z");
+  w = w.replace(/([uú])\s*l(?!h)(?![aâáãeêéiíoôóõuúwyY])/g, "$1");
   w = w.replace(/x\s*$/, "ks");
   w = w.replace(/ez\s*$/, "êz");
+  w = w.replace(/az\s*$/, "áz");
+  w = w.replace(/oz\s*$/, "óz");
   w = w.replace(/z\s*$/, "s");
   w = w.replace(/qu(?=[aâáãoôó])/g, "kw");
   w = w.replace(/qu(?=[eêéií])/g, "k");
@@ -65,14 +71,20 @@ function applyRules(word) {
   w = w.replace(/g(?=[eêéií])/g, "j");
   w = w.replace(/gu(?=[eêéií])/g, "g");
   w = w.replace(/ss/g, "s");
+  w = w.replace(/sç/g, "s");
   w = w.replace(/sc(?=[eêéií])/g, "s");
-  w = w.replace(/xc/g, "s");
-  w = w.replace(/(?<!^)(?<![iu])x(?=[aâáãeêéiíoôóuú])/g, "z");
+  w = w.replace(/xc(?=[eêéií])/g, "s");
+  w = w.replace(/^(in|h)?([eê])x(?=[aâáãeêéiíoôóõuú])/, "$1$2z");
+  if (!/^(re)?mex/.test(w)) {
+    w = w.replace(/[eé]x(?=[oa]s?\s*$)/, "éks");
+    w = w.replace(/(?<=e)x(?=ão\s*$|ões\s*$)/, "ks");
+  }
+  w = w.replace(/fix(?=[aeo])/g, "fiks");
   w = w.replace(/(?<=e)xar\s*$/g, "ksar");
   w = w.replace(/ç/g, "s");
   w = w.replace(/c(?=[aâáãoôóuú])/g, "k");
   w = w.replace(/c(?=[eêéií])/g, "s");
-  w = w.replace(/c(?![aâáãeêéiíoôóuúh])/g, "k");
+  w = w.replace(/c(?![aâáãeêéiíoôóõuúh])/g, "k");
   w = w.replace(/d(?=[ií])/g, "dj");
   w = w.replace(/de\s*$/, "dje");
   w = w.replace(/des\s*$/, "djes");
@@ -85,10 +97,11 @@ function applyRules(word) {
   // DITONGOS
   // =========================
 
-  w = w.replace(/(?<=[aâáãeêéiíoôóuú])i(?=[aâáãeêéiíoôóuú])/g, "y");
-  w = w.replace(/(?<=[aâáãeêéiíoôóuú])u(?=[aâáãeêéiíoôóuú])/g, "w");
+  w = w.replace(/(?<=[aeou])iu\s*$/, "íW");
+  w = w.replace(/(?<=[aâáãeêéiíoôóõuú])i(?=[aâáãeêéiíoôóõuú])/g, "y");
+  w = w.replace(/(?<=[aâáãeêéiíoôóõuú])u(?=[aâáãeêéiíoôóõuú])/g, "w");
   if (!/([aâáeêéoôóuú])\s*ir$/.test(w)) {
-	  w = w.replace(/([aâáeêéoôóuú])\s*i/g, "$1Y");
+	  w = w.replace(/([aâáeêéoôóuú])\s*i(?!nh|[mn](?![aâáãeêéiíoôóõuú]))/g, "$1Y");
   }
   w = w.replace(/([aâáeêéiíoôó])\s*u/g, "$1W");
   if (/l\s*$/.test(w) && !/[áéêíóôúâãõ]/.test(w)) {
@@ -97,9 +110,10 @@ function applyRules(word) {
 	  w = w.replace(/il/g, "íl");
 	  w = w.replace(/ol/g, "ól");
   }
-  w = w.replace(/([aâáêéiíoôó])\s*l(?!h)(?![aâáãeêéiíoôóuúwyY])/g, "$1W");
-  w = w.replace(/(e)\s*l(?!h)(?![aâáãeêéiíoôóuúwyY])/g, "e0 W");
-  w = w.replace(/(?<=[áiu])x/g, "ks");
+  w = w.replace(/([aâáêéiíoôó])\s*l(?!h)(?![aâáãeêéiíoôóõuúwyY])/g, "$1W");
+  w = w.replace(/e\s*l\s*$/, "e0 W");
+  w = w.replace(/e\s*l(?!h)(?![aâáãeêéiíoôóõuúwyY])/g, "eW");
+  w = w.replace(/(?<=á)x/g, "ks");
 
   // =========================
   // PROTEÇÃO
@@ -116,8 +130,8 @@ function applyRules(word) {
   w = w.replace(/gr/g, "§G§");
   w = w.replace(/fr/g, "§F§");
   w = w.replace(/vr/g, "§V§");
-  w = w.replace(/n(?=[aâáãeêéiíoôóuú])/g, "§N2§");
-  w = w.replace(/m(?=[aâáãeêéiíoôóuú])/g, "§M§");
+  w = w.replace(/n(?=[aâáãeêéiíoôóõuú])/g, "§N2§");
+  w = w.replace(/m(?=[aâáãeêéiíoôóõuú])/g, "§M§");
 
   // =========================
   // RÓTICAS
@@ -125,7 +139,7 @@ function applyRules(word) {
 
   w = w.replace(/h/g, "");
   w = w.replace(/rr/g, "h");
-  w = w.replace(/r(?![aâáãeêéiíoôóuú])|(?<![aâáãeêéiíoôóuúWY])r/g, "h");
+  w = w.replace(/r(?![aâáãeêéiíoôóõuú])|(?<![aâáãeêéiíoôóõuúWY])r/g, "h");
 
   // =========================
   // NASALIZAÇÃO
@@ -133,8 +147,9 @@ function applyRules(word) {
 
   w = w.replace(/ã\s*o/g, "A1 W");
   w = w.replace(/ã\s*e/g, "A1 Y");
-  w = w.replace(/ã\s*$/g, "A1 ");
+  w = w.replace(/ã(?=s?\s*$)/g, "A1 ");
   w = w.replace(/ã/g, "A2 ");
+  w = w.replace(/õem\s*$/, "O1 Y E0");
   w = w.replace(/õ\s*e/g, "O1 Y");
   w = w.replace(/õ/g, "O2 ");
 
@@ -148,15 +163,17 @@ function applyRules(word) {
   w = w.replace(/ôn(?![aeiou])/g, "O1 ");
   w = w.replace(/un(?![aeiou])/g, "U2 ");
 
+  w = w.replace(/éns\s*$/, "E1 Y s");
+  w = w.replace(/êm\s*$/, "E1 ");
   w = w.replace(/am\s*$/g, "A0 W");
-  w = w.replace(/am(?![aeiou])/g, "A2 ");
-  w = w.replace(/âm(?![aeiou])/g, "A1 ");
-  w = w.replace(/em(?![aeiou])/g, "E2 ");
-  w = w.replace(/ém(?![aeiou])/g, "E1 ");
-  w = w.replace(/im(?![aeiou])/g, "I2 ");
-  w = w.replace(/ím(?![aeiou])/g, "I1 ");
-  w = w.replace(/om(?![aeiou])/g, "O2 ");
-  w = w.replace(/um(?![aeiou])/g, "U2 ");
+  w = w.replace(/am(?![aeiou]|§N2§)/g, "A2 ");
+  w = w.replace(/âm(?![aeiou]|§N2§)/g, "A1 ");
+  w = w.replace(/em(?![aeiou]|§N2§)/g, "E2 ");
+  w = w.replace(/ém(?![aeiou]|§N2§)/g, "E1 ");
+  w = w.replace(/im(?![aeiou]|§N2§)/g, "I2 ");
+  w = w.replace(/ím(?![aeiou]|§N2§)/g, "I1 ");
+  w = w.replace(/om(?![aeiou]|§N2§)/g, "O2 ");
+  w = w.replace(/um(?![aeiou]|§N2§)/g, "U2 ");
 
   // =========================
   // ACENTO GRÁFICO
@@ -245,8 +262,6 @@ function applyRules(word) {
   w = w.replace(/o2\s*s$/, "u0 s");
   w = w.replace(/u2\s*$/, "u0 ");
 
-  // Redução da postônica não-final (Grau 2): /a/ átono medial pós-tônico
-  // reduz igual à postônica final (mesmo token "a0"); "ac" foi eliminado do PB.
   w = w.replace(/(?<=1[^1]*)a2/g, "a0");
 
   w = w.replace(/A2\s*$/, "A0 ");
@@ -319,10 +334,26 @@ function applyRules(word) {
   w = w.replace(/i2 ([aou]0)(\s*s)?\s*$/, "y $1$2");
   w = w.replace(/e2 ([aou]0)(\s*s)?\s*$/, "y $1$2");
   w = w.replace(/i2 i0(\s*s)?\s*$/, "i0$1");
+  w = w.replace(/o2 a0(\s*s)?\s*$/, "w a0$1");
+  w = w.replace(/i2 o2 h\s*$/, "y o2 h");
   w = w.replace(/(?<!o)o1 z a0(\s*s)?\s*$/, "oo1 z a0$1");
   w = w.replace(/(tch|dj) y(?=\s)/g, "$1");
 
-  w = w.trim();
+  w = w.replace(/(?<![a-zA-Z])s (?=(?:b|d|dj|g|v|j|m|n|l|lh|nh)(?![a-zA-Z0-9]))/g, "z ");
+
+  w = w.replace(/\s+/g, " ").trim();
+
+  const toks = w.split(" ");
+  const out = [];
+  for (let i = 0; i < toks.length; i++) {
+    const t = toks[i], n = toks[i + 1];
+    const coda = /^[pbtdkgf]$/.test(t) && n !== undefined &&
+                 /^(p|b|t|d|k|g|f|v|s|z|x|j|m|n|nh|lh|h|tch|dj)$/.test(n) &&
+                 !(t === "k" && n === "s");
+    if (coda) out.push(t === "t" ? "tch" : t === "d" ? "dj" : t, "i2");
+    else out.push(t);
+  }
+  w = out.join(" ");
 
   return w;
 }
