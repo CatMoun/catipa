@@ -89,4 +89,6 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
 - v3.0.1 (08-07-2026)
   - atualização de léxico e regras
 - v3.0.2 (28-09-2026)
-  - atualização de léxico e regras
+  - atualização de léxico
+- v3.1.0 (13-11-2026)
+  - grande atualização de léxico e regras
