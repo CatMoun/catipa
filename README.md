@@ -92,3 +92,5 @@ Contribuições são bem-vindas. Sugestões, correções e propostas de expansã
   - atualização de léxico
 - v3.1.0 (13-11-2026)
   - grande atualização de léxico e regras
+- v3.1.1 (22-11-2026)
+  - atualização de léxico e regras
